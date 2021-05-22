@@ -2,13 +2,21 @@ import hechizos.*
 import objetos.*
 import wollok.game.*
 class Heroe {
-	var property nivelActual 
-	var property image = null;
-	var property position = null;
+	var
 	var property mochila = #{}
 	var property libroDeHechizos = #{}
 	var property manoIzquierda = punio
 	var property cabeza = armaduraInicial
+	var property modificadorAtaque
+	var property modificadorDefensa
+	var property maxVida
+	var property actualVida
+	var property maxMana
+	var property actualMana
+	
+	var property nivelActual 
+	var property image = null;
+	var property position = null;
 	
 	method aprenderHechizo(hechizo){
 		libroDeHechizos.add(hechizo)
