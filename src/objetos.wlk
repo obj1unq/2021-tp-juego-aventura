@@ -1,3 +1,5 @@
+import wollok.game.*
+
 class Arma {
 	const property nombreArma
 	const property danioArma
@@ -78,3 +80,29 @@ const cascoDePlacas = new Armadura(
 	tipoArmadura    = "cabeza",
 	imagen          = ""
 )
+
+class Cofre {
+	var property position;
+	var property imagenAbierto;
+	var property imagenCerrado;
+	var property estaAbierto = false
+	
+	method image() {
+		return if (estaAbierto) imagenAbierto else imagenCerrado
+	}
+	
+	method teEncontraron(heroe) {
+		estaAbierto = true;
+	}
+}
+
+object escenarioPrincipal {
+	var property position = game.origin()
+	
+	method image() {
+		return "escenario.png"
+	}
+	
+	method teEncontraron(heroe) {
+	}
+}
