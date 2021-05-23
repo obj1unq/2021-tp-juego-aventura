@@ -38,7 +38,7 @@ class Heroe {
 
 const Warrior = new Heroe(
 	image = "personajePrincipal.png", 
-	position= game.origin(), 
+	position= game.at(2, 2), //game.origin(), 
 	nivelActual = nivelInicial,
 	modificadorAtaque = 1.4,
 	modificadorDefensa = 1.1,
@@ -50,7 +50,7 @@ const Warrior = new Heroe(
 
 const Tank = new Heroe(
 	image = "personajePrincipal.png", 
-	position= game.origin(), 
+	position= game.at(4, 4), 
 	nivelActual = nivelInicial,
 	modificadorAtaque = 1.1,
 	modificadorDefensa = 1.6,
@@ -62,7 +62,7 @@ const Tank = new Heroe(
 
 const Wizzard = new Heroe(
 	image = "personajePrincipal.png", 
-	position= game.origin(), 
+	position= game.at(2, 4), 
 	nivelActual = nivelInicial,
 	modificadorAtaque = 1.1,
 	modificadorDefensa = 1.6,

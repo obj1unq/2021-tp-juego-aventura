@@ -26,6 +26,7 @@ object pantallaSeleccion {
 	}
 
 	method seleccionar() {
+		game.clear()
 		nivelInicial.iniciar(self.seleccionado())
 	}
 
@@ -58,8 +59,8 @@ object nivelInicial {
 	}
 	
 	method cargarPantalla(heroe) {
-		game.clear()
-		game.addVisual(escenarioPrincipal)
+		game.boardGround("escenario.png")
+		//game.addVisual(escenarioPrincipal)
 		game.addVisual(heroe)
 	}
 
