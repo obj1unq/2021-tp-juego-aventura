@@ -4,15 +4,66 @@ import enemigos.*
 import objetos.*
 import configuraciones.*
 
+object pantallaSeleccion {
+
+	var property heroes = [ Warrior, Tank, Wizzard ]
+	const property image = "jugador.png"
+
+	method seleccionado() = heroes.head()
+
+	method position() = self.seleccionado().position().up(1)
+
+	method moverDerecha() {
+		const seleccionadoActual = self.seleccionado()
+		heroes.remove(seleccionadoActual)
+		heroes.add(seleccionadoActual)
+	}
+
+	method moverIzquierda() {
+		const ultimoElemento = heroes.last()
+		heroes.remove(ultimoElemento)
+		heroes = [ ultimoElemento ] + heroes
+	}
+
+	method seleccionar() {
+		nivelInicial.iniciar(self.seleccionado())
+	}
+
+	method selccionarHeroe() {
+		keyboard.left().onPressDo({ self.moverIzquierda()})
+		keyboard.right().onPressDo({ self.moverDerecha()})
+		keyboard.enter().onPressDo({ self.seleccionar()})
+	}
+	
+	method cargarPantalla() {
+		game.addVisual(Warrior)
+		game.addVisual(Tank)
+		game.addVisual(Wizzard)
+		game.addVisual(self)
+	}
+	
+	method iniciar() {
+		self.cargarPantalla()
+		self.selccionarHeroe()
+	}
+
+}
 
 object nivelInicial {
 	
-	method iniciar() {
-		self.agregarObjetosIniciales()
+	method iniciar(heroe) {
+		self.cargarPantalla(heroe)
+		self.agregarObjetosIniciales(heroe)
 		self.configurarMecanicas()
 	}
+	
+	method cargarPantalla(heroe) {
+		game.clear()
+		game.addVisual(escenarioPrincipal)
+		game.addVisual(heroe)
+	}
 
-	method agregarObjetosIniciales() {
+	method agregarObjetosIniciales(heroe) {
 		const esqueleto = new Enemigo(
 			image = "enemigo1.png", 
 			position= game.at(heroe.position().x().max(3), 0));
