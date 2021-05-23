@@ -2,17 +2,15 @@ import wollok.game.*
 import pepita.*
 import niveles.*
 import objetos.*
+import heroes.*
 
 program juego {
 	
-	game.title("Juego Base")
+	game.title("Aventura")
 	game.height(10) //alto
 	game.width(10) //ancho
 	game.cellSize(60) // ajustar el tamaño de pixeles de celda
 	
-	game.addVisual(escenarioPrincipal)
-	game.addVisual(heroe)
-	nivelInicial.iniciar()
-	
+	pantallaSeleccion.iniciar()
 	game.start()
 }
