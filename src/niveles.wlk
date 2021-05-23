@@ -55,7 +55,7 @@ object nivelInicial {
 	method iniciar(heroe) {
 		self.cargarPantalla(heroe)
 		self.agregarObjetosIniciales(heroe)
-		self.configurarMecanicas()
+		self.configurarMecanicas(heroe)
 	}
 	
 	method cargarPantalla(heroe) {
@@ -106,9 +106,9 @@ object nivelInicial {
 		game.addVisual(cofreAzul2)
 	}
 
-	method configurarMecanicas() {
-		config.configurarTeclas()
-		config.configurarColisiones()
+	method configurarMecanicas(heroe) {
+		config.configurarTeclas(heroe)
+		config.configurarColisiones(heroe)
 	}
 
 	method terminar() {
