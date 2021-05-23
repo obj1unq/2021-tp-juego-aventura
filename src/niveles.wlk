@@ -7,7 +7,7 @@ import configuraciones.*
 object pantallaSeleccion {
 
 	var property heroes = [ Warrior, Tank, Wizzard ]
-	const property image = "jugador.png"
+	const property image = "flechaSeleccion2.png"
 
 	method seleccionado() = heroes.head()
 
@@ -59,8 +59,8 @@ object nivelInicial {
 	}
 	
 	method cargarPantalla(heroe) {
-		game.boardGround("escenario.png")
-		//game.addVisual(escenarioPrincipal)
+		//game.boardGround("escenario.png")
+		game.addVisual(escenarioPrincipal)
 		game.addVisual(heroe)
 	}
 

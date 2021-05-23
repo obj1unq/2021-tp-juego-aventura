@@ -64,10 +64,10 @@ const Wizzard = new Heroe(
 	image = "personajePrincipal.png", 
 	position= game.at(2, 4), 
 	nivelActual = nivelInicial,
-	modificadorAtaque = 1.1,
-	modificadorDefensa = 1.6,
-	maxVida = 250,
-	actualVida = 250,
-	maxMana = 20,
-	actualMana = 20
+	modificadorAtaque = 0.8,
+	modificadorDefensa = 0.9,
+	maxVida = 150,
+	actualVida = 150,
+	maxMana = 100,
+	actualMana = 100
 )
