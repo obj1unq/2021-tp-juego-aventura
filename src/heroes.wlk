@@ -1,6 +1,7 @@
 import hechizos.*
 import objetos.*
 import wollok.game.*
+import niveles.*
 
 class Heroe {
 	var property mochila = #{}
@@ -34,3 +35,5 @@ class Heroe {
 		}
 	}
 }
+
+const heroe = new Heroe(image = "personajePrincipal.png", position= game.origin(), nivelActual = nivelInicial)
