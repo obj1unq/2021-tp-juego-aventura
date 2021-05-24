@@ -7,7 +7,7 @@ class Heroe {
 	var property mochila = #{}
 	var property libroDeHechizos = #{}
 	var property manoIzquierda = punio
-	var property cabeza = armaduraInicial
+	var property cuerpo = armaduraInicial
 	var property modificadorAtaque
 	var property modificadorDefensa
 	var property maxVida
@@ -19,12 +19,32 @@ class Heroe {
 	var property image = null;
 	var property position = null;
 	
-	method aprenderHechizo(hechizo){
-		libroDeHechizos.add(hechizo)
+	method tomarObjeto(objeto) {
+		objeto.usar(self, objeto)
 	}
 	
-	method tomarObjeto(objeto) {
+	method equiparArma(equipo) {
+		self.tirarEquipoAReemplazar(self.manoIzquierda())
+		self.manoIzquierda(equipo)
+	}
+	
+	method equiparArmadura(equipo) {
+		self.tirarEquipoAReemplazar(self.cuerpo())
+		self.cuerpo(equipo)
+	}
+	
+	method guardarObjetoEnLaMochila(objeto){
 		mochila.add(objeto)
+	}
+	
+	method tirarEquipoAReemplazar(equipo) {
+		//codigo para droppear apropiadamente el equipo a ser reemplazado
+		
+	}
+	
+	method aprenderHechizo(hechizo){
+		//falta chequeear que el hechizo no existe ya
+		libroDeHechizos.add(hechizo)
 	}
 	
 	method irA(x, y) {
@@ -38,7 +58,7 @@ class Heroe {
 
 const Warrior = new Heroe(
 	image = "personajePrincipal.png", 
-	position= game.at(2, 2), //game.origin(), 
+	position= game.at(2, 2),
 	nivelActual = nivelInicial,
 	modificadorAtaque = 1.4,
 	modificadorDefensa = 1.1,
@@ -71,3 +91,4 @@ const Wizzard = new Heroe(
 	maxMana = 100,
 	actualMana = 100
 )
+/////////////////////////////////////////////////////////////////////////////////
