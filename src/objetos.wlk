@@ -81,6 +81,24 @@ const cascoDePlacas = new Armadura(
 	imagen          = ""
 )
 
+class Pocion {
+	var property nombrePocion
+	var property tipoPocion
+	var property potenciaPocion
+}
+
+const pocionVida = new Pocion(
+	nombrePocion = "Pocion de Vida",
+	tipoPocion = "vida",
+	potenciaPocion = 25
+)
+
+const pocionMana = new Pocion(
+	nombrePocion = "Pocion de Mana",
+	tipoPocion = "mana",
+	potenciaPocion = 15
+)
+
 class Cofre {
 	var property position;
 	var property imagenAbierto;
