@@ -47,7 +47,7 @@ class Heroe {
 	
 	method aprenderHechizo(hechizo){
 		//falta chequeear que el hechizo no existe ya
-		if (not self.mochila().contains(hechizo)) {
+		if (not self.libroDeHechizos().contains(hechizo)) {
 			libroDeHechizos.add(hechizo)
 		} else {
 			//Hechizo ya en libro, imprimo mensaje?
