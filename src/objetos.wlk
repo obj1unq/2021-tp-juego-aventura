@@ -9,7 +9,7 @@ class Arma {
 	method nombreDeArma() {return nombreArma}
 	method danioDeArma() {return danioArma}
 	method tipoDeArma() {return tipoArma}
-	method usar(heroe, arma) {heroe.equiparArma(arma)}
+	method interactuar(heroe, arma) {heroe.equiparArma(arma)}
 }
 
 // Defino algunas armas , incluida el arma equipada al inicio del juego
@@ -50,7 +50,7 @@ class Armadura {
 	method nombreDeArmadura() {return nombreArmadura}
 	method defensaDeArmadura() {return defensaArmadura}
 	method tipoDeArmadura() {return tipoArmadura}
-	method usar(heroe, armadura) {heroe.equiparArmadura(armadura)}
+	method interactuar(heroe, armadura) {heroe.equiparArmadura(armadura)}
 }
 
 // Defino algunas armaduras, incluido el trapo de armadura al inicio del juego xD
@@ -90,7 +90,7 @@ class Pocion {
 	method nombrePocion() {return nombrePocion}
 	method tipoPocion() {return tipoPocion}
 	method potenciaPocion() {return potenciaPocion}
-	method usar(heroe, objeto) {heroe.guardarObjetoEnLaMochila(objeto)}
+	method interactuar(heroe, objeto) {heroe.guardarObjetoEnLaMochila(objeto)}
 }
  // Defino algunas pociones
 const pocionVida = new Pocion(

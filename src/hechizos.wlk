@@ -9,7 +9,7 @@ class Hechizo {
 	method poderDelHechizo() {return poderHechizo}
 	method costoDelHechizo() {return costoHechizo}
 	method tipoDelHechizo() {return tipoHechizo}
-	method usar(heroe, hechizo) {heroe.aprenderHechizo(hechizo)}
+	method interactuar(heroe, hechizo) {heroe.aprenderHechizo(hechizo)}
 }
 
 const bolaDeFuego = new Hechizo(

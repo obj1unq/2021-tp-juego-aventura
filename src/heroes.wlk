@@ -20,7 +20,7 @@ class Heroe {
 	var property position = null;
 	
 	method tomarObjeto(objeto) {
-		objeto.usar(self, objeto)
+		objeto.interactuar(self, objeto)
 	}
 	
 	method equiparArma(equipo) {
@@ -44,7 +44,11 @@ class Heroe {
 	
 	method aprenderHechizo(hechizo){
 		//falta chequeear que el hechizo no existe ya
-		libroDeHechizos.add(hechizo)
+		if (not self.mochila().contains(hechizo)) {
+			libroDeHechizos.add(hechizo)
+		} else {
+			//Hechizo ya en libro, imprimo mensaje?
+		}
 	}
 	
 	method irA(x, y) {
