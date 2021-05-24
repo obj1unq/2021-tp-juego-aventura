@@ -24,16 +24,19 @@ class Heroe {
 	}
 	
 	method equiparArma(equipo) {
+		//remover equipo del piso al tomarlo falta
 		self.tirarEquipoAReemplazar(self.manoIzquierda())
 		self.manoIzquierda(equipo)
 	}
 	
 	method equiparArmadura(equipo) {
+		//remover equipo del piso al tomarlo falta
 		self.tirarEquipoAReemplazar(self.cuerpo())
 		self.cuerpo(equipo)
 	}
 	
 	method guardarObjetoEnLaMochila(objeto){
+		//remover objeto de la pantalla falta
 		mochila.add(objeto)
 	}
 	
