@@ -39,7 +39,7 @@ const espadaUnaMano = new Arma(
 	tipoArma   = "espada",
 	imagen     = ""
 )
-
+/////////////////////////////////////////////////////////////////////////////////
 class Armadura {
 	const property nombreArmadura
 	const property defensaArmadura
@@ -52,7 +52,6 @@ class Armadura {
 }
 
 // Defino algunas armaduras, incluido el trapo de armadura al inicio del juego xD
-
 const armaduraInicial = new Armadura(
 	nombreArmadura  = "Trapo Andrajoso",
 	defensaArmadura = 0,
@@ -80,13 +79,13 @@ const cascoDePlacas = new Armadura(
 	tipoArmadura    = "cabeza",
 	imagen          = ""
 )
-
+/////////////////////////////////////////////////////////////////////////////////
 class Pocion {
 	var property nombrePocion
 	var property tipoPocion
 	var property potenciaPocion
 }
-
+ // Defino algunas pociones
 const pocionVida = new Pocion(
 	nombrePocion = "Pocion de Vida",
 	tipoPocion = "vida",
@@ -98,7 +97,7 @@ const pocionMana = new Pocion(
 	tipoPocion = "mana",
 	potenciaPocion = 15
 )
-
+/////////////////////////////////////////////////////////////////////////////////
 class Cofre {
 	var property position;
 	var property imagenAbierto;
@@ -113,7 +112,7 @@ class Cofre {
 		estaAbierto = true;
 	}
 }
-
+/////////////////////////////////////////////////////////////////////////////////
 object escenarioPrincipal {
 	var property position = game.origin()
 	
