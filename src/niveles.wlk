@@ -8,7 +8,7 @@ import gestorDeObjetos.*
 object pantallaSeleccion {
 
 	var property heroes = [ Warrior, Tank, Wizzard ]
-	const property image = "flechaSeleccion2.png"
+	const property image = "flechaSeleccion.png"
 
 	method seleccionado() = heroes.head()
 

@@ -10,6 +10,7 @@ program juego {
 	game.height(10) //alto
 	game.width(10) //ancho
 	game.cellSize(60) // ajustar el tamaño de pixeles de celda
+	game.boardGround("menuInicial.png")
 	
 	pantallaSeleccion.iniciar()
 	game.start()
