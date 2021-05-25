@@ -2,12 +2,13 @@ import hechizos.*
 import objetos.*
 import wollok.game.*
 import niveles.*
+import gestorDeObjetos.*
 
 class Heroe {
 	var property mochila = #{}
 	var property libroDeHechizos = #{}
 	var property manoIzquierda = punio
-	var property cabeza = armaduraInicial
+	var property cuerpo = armaduraInicial
 	var property modificadorAtaque
 	var property modificadorDefensa
 	var property maxVida
@@ -19,12 +20,111 @@ class Heroe {
 	var property image = null;
 	var property position = null;
 	
-	method aprenderHechizo(hechizo){
-		libroDeHechizos.add(hechizo)
+	method tomarObjeto() {
+		self.tomarObjetoQueTenesDebajo()
 	}
 	
-	method tomarObjeto(objeto) {
+	method tomar(objeto) {
+        objeto.interactuar(self, objeto)
+    }
+
+    method tomarObjetoQueTenesDebajo() {
+        self.tomar(self.objetoDebajo())
+    }
+
+    method objetoDebajo() {
+        const objetos = game.colliders(self)
+        if (objetos.isEmpty()) {
+            self.error("No hay nada acá")
+        }
+        return objetos.head()
+    }
+    
+	method equiparArma(equipo) {
+		gestorDeObjetos.remover(equipo)
+		self.tirarEquipoAReemplazar(self.manoIzquierda())
+		self.manoIzquierda(equipo)
+	}
+	
+	method equiparArmadura(equipo) {
+		gestorDeObjetos.remover(equipo)
+		self.tirarEquipoAReemplazar(self.cuerpo())
+		self.cuerpo(equipo)
+	}
+	
+	method guardarObjetoEnLaMochila(objeto){
+		gestorDeObjetos.remover(objeto)
 		mochila.add(objeto)
+	}
+	
+	method tirarEquipoAReemplazar(equipo) {
+		gestorDeObjetos.agregarEnPosicionDelPersonaje(self, equipo)
+		self.manoIzquierda(punio)		
+	}
+	
+	method aprenderHechizo(hechizo){
+		if (not self.libroDeHechizos().contains(hechizo)) { //Si hechizo no esta en el libro
+			libroDeHechizos.add(hechizo) //Agregar hechizo al conjunto
+		} else {
+			self.error("El hechizo ya se encuentra en el libro")
+		}
+	}
+	
+	method beberPocionVida() {
+		if (self.hayPocionEnLaMochila(pocionVida) && (not self.heroeConVidaMaxima())) {
+			self.beberPocion(self.sacarPocion(pocionVida))
+		}
+	}
+	
+	method beberPocionMana() {
+		if (self.hayPocionEnLaMochila(pocionMana) && (not self.heroeConManaMaxima())) {
+			self.beberPocion(pocionMana)
+		}
+	}
+	
+	method sacarPocion(pocion) {
+		self.removerPocionDeLaMochila(pocion)
+		return self.mochila(pocion)
+	}
+	
+	method beberPocion(pocion) {
+		if (pocion == pocionVida) {
+			self.incrementarVida(pocion)
+		} else {
+			self.incrementarMana(pocion)
+		}
+	}
+	
+	method incrementarVida(pocion) {
+		if (self.actualVida() + pocion.potenciaPocion() > self.maxVida()) {
+			self.actualVida(self.maxVida())
+		} else {
+			self.actualVida(self.actualVida() + pocion.potenciaPocion())
+		}
+	}
+	
+	method incrementarMana(pocion) {
+		if (self.actualMana() + pocion.potenciaPocion() > self.maxMana()) {
+			self.actualMana(self.maxMana())
+		} else {
+			self.actualMana(self.actualMana() + pocion.potenciaPocion())
+		}
+	}
+	
+	method hayPocionEnLaMochila(pocion) {
+		return self.mochila().contains(pocion)
+	}
+	
+	method removerPocionDeLaMochila(pocion) {
+		self.mochila().remove(pocion)
+	}
+	
+	method heroeConVidaMaxima() {
+		return self.actualVida() == self.maxVida()
+	}
+	
+	method heroeConManaMaxima() {
+		return self.actualMana() == self.maxMana()
 	}
 	
 	method irA(x, y) {
@@ -38,7 +138,7 @@ class Heroe {
 
 const Warrior = new Heroe(
 	image = "personajePrincipal.png", 
-	position= game.at(2, 2), //game.origin(), 
+	position= game.at(2, 2),
 	nivelActual = nivelInicial,
 	modificadorAtaque = 1.4,
 	modificadorDefensa = 1.1,
@@ -71,3 +171,4 @@ const Wizzard = new Heroe(
 	maxMana = 100,
 	actualMana = 100
 )
+/////////////////////////////////////////////////////////////////////////////////

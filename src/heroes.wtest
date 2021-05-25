@@ -1,0 +1,63 @@
+import heroes.*
+import objetos.*
+import wollok.game.*
+import hechizos.*
+import gestorDeObjetos.*
+
+describe "Tests para los heroes" {
+	
+	fixture {
+		game.clear()
+		gestorDeObjetos.agregar(Warrior)
+	}
+	
+	test "Heroe toma un arma y se lo equipa" {
+		gestorDeObjetos.agregar(dagaInicial)
+		Warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.equals(dagaInicial, Warrior.manoIzquierda())
+		assert.equals(punio, Warrior.objetoDebajo())
+	}
+	
+	test "Heroe toma una poción y se lo equipa" {
+		gestorDeObjetos.agregar(pocionMana)
+		Warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.equals(#{pocionMana}, Warrior.mochila())
+		assert.throwsExceptionWithMessage("No hay nada acá", {Warrior.tomarObjetoQueTenesDebajo()})
+	}
+	
+	test "Heroe toma una armadura y se lo equipa" {
+		gestorDeObjetos.agregar(pecheraDePlacas)
+		Warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.equals(pecheraDePlacas, Warrior.cuerpo())
+		assert.equals(armaduraInicial, Warrior.objetoDebajo())
+	}
+	
+	test "Heroe aprende un hechizo" {
+		gestorDeObjetos.agregar(rayoDeHielo)
+		Warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.equals(#{rayoDeHielo}, Warrior.libroDeHechizos())
+	}
+	
+	test "Heroe ya aprendió el hechizo" {
+		gestorDeObjetos.agregar(rayoDeHielo)
+		Warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.throwsException({Warrior.tomarObjetoQueTenesDebajo()})
+	}
+	
+	test "No hay nada que tomar" {
+		assert.throwsException({Warrior.tomarObjetoQueTenesDebajo()})
+	}
+	
+	test "Heroe bebe poción" {
+		Warrior.actualMana(15)
+		gestorDeObjetos.agregar(pocionMana)
+		Warrior.tomarObjetoQueTenesDebajo()
+		Warrior.beberPocionMana()
+		assert.equals(30, Warrior.actualMana())
+	}
+}

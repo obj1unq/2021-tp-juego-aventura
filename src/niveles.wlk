@@ -3,6 +3,7 @@ import wollok.game.*
 import enemigos.*
 import objetos.*
 import configuraciones.*
+import gestorDeObjetos.*
 
 object pantallaSeleccion {
 
@@ -37,10 +38,10 @@ object pantallaSeleccion {
 	}
 	
 	method cargarPantalla() {
-		game.addVisual(Warrior)
-		game.addVisual(Tank)
-		game.addVisual(Wizzard)
-		game.addVisual(self)
+		gestorDeObjetos.agregar(Warrior)
+		gestorDeObjetos.agregar(Tank)
+		gestorDeObjetos.agregar(Wizzard)
+		gestorDeObjetos.agregar(self)
 	}
 	
 	method iniciar() {
@@ -49,7 +50,7 @@ object pantallaSeleccion {
 	}
 
 }
-
+/////////////////////////////////////////////////////////////////////////////////
 object nivelInicial {
 	
 	method iniciar(heroe) {
@@ -60,8 +61,8 @@ object nivelInicial {
 	
 	method cargarPantalla(heroe) {
 		//game.boardGround("escenario.png")
-		game.addVisual(escenarioPrincipal)
-		game.addVisual(heroe)
+		gestorDeObjetos.agregar(escenarioPrincipal)
+		gestorDeObjetos.agregar(heroe)
 	}
 
 	method agregarObjetosIniciales(heroe) {
@@ -97,13 +98,13 @@ object nivelInicial {
 			imagenAbierto = "Blue Chest Open.png",
 			position= game.at(1,9))
 			
-		game.addVisual(esqueleto)
-		game.addVisual(murcielago)
-		game.addVisual(arbolFuego)
-		game.addVisual(cofreAzul)
-		game.addVisual(cofreRojo)
-		game.addVisual(cofreVerde)
-		game.addVisual(cofreAzul2)
+		gestorDeObjetos.agregar(esqueleto)
+		gestorDeObjetos.agregar(murcielago)
+		gestorDeObjetos.agregar(arbolFuego)
+		gestorDeObjetos.agregar(cofreAzul)
+		gestorDeObjetos.agregar(cofreRojo)
+		gestorDeObjetos.agregar(cofreVerde)
+		gestorDeObjetos.agregar(cofreAzul2)
 	}
 
 	method configurarMecanicas(heroe) {
@@ -115,3 +116,4 @@ object nivelInicial {
 		game.clear()
 	}
 }
+/////////////////////////////////////////////////////////////////////////////////
