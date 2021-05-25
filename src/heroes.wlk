@@ -2,6 +2,7 @@ import hechizos.*
 import objetos.*
 import wollok.game.*
 import niveles.*
+import gestorDeObjetos.*
 
 class Heroe {
 	var property mochila = #{}
@@ -40,25 +41,24 @@ class Heroe {
     }
     
 	method equiparArma(equipo) {
-		//remover equipo del piso al tomarlo falta
+		gestorDeObjetos.remover(equipo)
 		self.tirarEquipoAReemplazar(self.manoIzquierda())
 		self.manoIzquierda(equipo)
 	}
 	
 	method equiparArmadura(equipo) {
-		//remover equipo del piso al tomarlo falta
+		gestorDeObjetos.remover(equipo)
 		self.tirarEquipoAReemplazar(self.cuerpo())
 		self.cuerpo(equipo)
 	}
 	
 	method guardarObjetoEnLaMochila(objeto){
-		//remover objeto de la pantalla falta
+		gestorDeObjetos.remover(objeto)
 		mochila.add(objeto)
 	}
 	
 	method tirarEquipoAReemplazar(equipo) {
-		//codigo para droppear apropiadamente el equipo a ser reemplazado
-		game.addVisual(equipo) //validar posicion
+		gestorDeObjetos.agregarEnPosicionDelPersonaje(self, equipo)
 		self.manoIzquierda(punio)		
 	}
 	

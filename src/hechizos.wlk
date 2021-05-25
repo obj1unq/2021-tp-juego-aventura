@@ -1,9 +1,12 @@
+import wollok.game.*
+
 class Hechizo {
 	const property nombreHechizo
 	const property poderHechizo
 	const property costoHechizo
 	const property tipoHechizo
-	const property imagen
+	var property image
+	var property position
 	
 	method nombreDelHechizo() {return nombreHechizo}
 	method poderDelHechizo() {return poderHechizo}
@@ -17,7 +20,8 @@ const bolaDeFuego = new Hechizo(
 	poderHechizo  = 25,
 	tipoHechizo   = "fuego",
 	costoHechizo  = 10,
-	imagen        = ""
+	image         = "",
+	position      = game.at(1,1)
 )
 
 const rayoDeHielo = new Hechizo(
@@ -25,7 +29,8 @@ const rayoDeHielo = new Hechizo(
 	poderHechizo  = 15,
 	tipoHechizo   = "agua",
 	costoHechizo  = 10,
-	imagen        = ""
+	image         = "",
+	position      = game.at(2,2)
 )
 
 const descargaRelampago = new Hechizo(
@@ -33,5 +38,6 @@ const descargaRelampago = new Hechizo(
 	poderHechizo  = 20,
 	tipoHechizo   = "rayo",
 	costoHechizo  = 10,
-	imagen        = ""
+	image         = "",
+	position      = game.at(3,3)
 )
