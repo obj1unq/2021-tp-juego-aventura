@@ -72,16 +72,19 @@ class Heroe {
 	
 	method beberPocionVida() {
 		if (self.hayPocionEnLaMochila(pocionVida) && (not self.heroeConVidaMaxima())) {
-			self.removerPocionDeLaMochila(pocionVida)
-			self.beberPocion(pocionVida)
+			self.beberPocion(self.sacarPocion(pocionVida))
 		}
 	}
 	
 	method beberPocionMana() {
 		if (self.hayPocionEnLaMochila(pocionMana) && (not self.heroeConManaMaxima())) {
-			self.removerPocionDeLaMochila(pocionMana)
 			self.beberPocion(pocionMana)
 		}
+	}
+	
+	method sacarPocion(pocion) {
+		self.removerPocionDeLaMochila(pocion)
+		return self.mochila(pocion)
 	}
 	
 	method beberPocion(pocion) {
