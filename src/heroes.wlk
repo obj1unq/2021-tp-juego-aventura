@@ -19,10 +19,26 @@ class Heroe {
 	var property image = null;
 	var property position = null;
 	
-	method tomarObjeto(objeto) {
-		objeto.interactuar(self, objeto)
+	method tomarObjeto() {
+		self.tomarObjetoQueTenesDebajo()
 	}
 	
+	method tomar(objeto) {
+        objeto.interactuar(self, objeto)
+    }
+
+    method tomarObjetoQueTenesDebajo() {
+        self.tomar(self.objetoDebajo())
+    }
+
+    method objetoDebajo() {
+        const objetos = game.colliders(self)
+        if (objetos.isEmpty()) {
+            self.error("No hay nada acá")
+        }
+        return objetos.head()
+    }
+    
 	method equiparArma(equipo) {
 		//remover equipo del piso al tomarlo falta
 		self.tirarEquipoAReemplazar(self.manoIzquierda())
@@ -52,6 +68,10 @@ class Heroe {
 		} else {
 			//Hechizo ya en libro, imprimo mensaje?
 		}
+	}
+	
+	method beberPocionVida() {
+		if (self.mochila().contains())
 	}
 	
 	method irA(x, y) {
