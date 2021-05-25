@@ -10,8 +10,8 @@ object config {
 		keyboard.up().onPressDo({ heroe.irA(heroe.position().x(), ( heroe.position().y() + 1).min(9))})
 		keyboard.down().onPressDo({ heroe.irA(heroe.position().x(),( heroe.position().y() - 1).max(0))})
 		keyboard.c().onPressDo({ heroe.tomarObjeto()})
-		keyboard.m().onPressDo({ heroe.beberPosion()})
-		
+		keyboard.z().onPressDo({ heroe.beberPocionVida()})
+		keyboard.x().onPressDo({ heroe.beberPocionMana()})
 	}
 
 	method configurarColisiones(heroe) {
