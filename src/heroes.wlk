@@ -58,20 +58,70 @@ class Heroe {
 	
 	method tirarEquipoAReemplazar(equipo) {
 		//codigo para droppear apropiadamente el equipo a ser reemplazado
-		
+		game.addVisual(equipo) //validar posicion
+		self.manoIzquierda(punio)		
 	}
 	
 	method aprenderHechizo(hechizo){
-		//falta chequeear que el hechizo no existe ya
-		if (not self.libroDeHechizos().contains(hechizo)) {
-			libroDeHechizos.add(hechizo)
+		if (not self.libroDeHechizos().contains(hechizo)) { //Si hechizo no esta en el libro
+			libroDeHechizos.add(hechizo) //Agregar hechizo al conjunto
 		} else {
-			//Hechizo ya en libro, imprimo mensaje?
+			self.error("El hechizo ya se encuentra en el libro")
 		}
 	}
 	
 	method beberPocionVida() {
-		if (self.mochila().contains())
+		if (self.hayPocionEnLaMochila(pocionVida) && (not self.heroeConVidaMaxima())) {
+			self.removerPocionDeLaMochila(pocionVida)
+			self.beberPocion(pocionVida)
+		}
+	}
+	
+	method beberPocionMana() {
+		if (self.hayPocionEnLaMochila(pocionMana) && (not self.heroeConManaMaxima())) {
+			self.removerPocionDeLaMochila(pocionMana)
+			self.beberPocion(pocionMana)
+		}
+	}
+	
+	method beberPocion(pocion) {
+		if (pocion == pocionVida) {
+			self.incrementarVida(pocion)
+		} else {
+			self.incrementarMana(pocion)
+		}
+	}
+	
+	method incrementarVida(pocion) {
+		if (self.actualVida() + pocion.potenciaPocion() > self.maxVida()) {
+			self.actualVida(self.maxVida())
+		} else {
+			self.actualVida(self.actualVida() + pocion.potenciaPocion())
+		}
+	}
+	
+	method incrementarMana(pocion) {
+		if (self.actualMana() + pocion.potenciaPocion() > self.maxMana()) {
+			self.actualMana(self.maxMana())
+		} else {
+			self.actualMana(self.actualMana() + pocion.potenciaPocion())
+		}
+	}
+	
+	method hayPocionEnLaMochila(pocion) {
+		return self.mochila().contains(pocion)
+	}
+	
+	method removerPocionDeLaMochila(pocion) {
+		self.mochila().remove(pocion)
+	}
+	
+	method heroeConVidaMaxima() {
+		return self.actualVida() == self.maxVida()
+	}
+	
+	method heroeConManaMaxima() {
+		return self.actualMana() == self.maxMana()
 	}
 	
 	method irA(x, y) {
