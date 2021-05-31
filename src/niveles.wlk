@@ -8,11 +8,11 @@ import gestorDeObjetos.*
 object pantallaSeleccion {
 
 	var property heroes = [ Warrior, Tank, Wizzard ]
-	const property image = "flechaSeleccion2.png"
+	const property image = "flechaSeleccion.png"
 
 	method seleccionado() = heroes.head()
 
-	method position() = self.seleccionado().position().up(1)
+	method position() = self.seleccionado().position().down(1)
 
 	method moverDerecha() {
 		const seleccionadoActual = self.seleccionado()
