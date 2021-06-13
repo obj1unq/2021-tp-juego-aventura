@@ -19,3 +19,16 @@ object config {
 	}
 
 }
+
+object configPelea {
+	
+	var property enemigo;
+	
+	method configurarTeclas(heroe) {
+		keyboard.a().onPressDo({ heroe.atacar(enemigo)})
+	}
+	
+	method configurarColisiones(heroe) {
+		game.onCollideDo(heroe, { algo => algo.teEncontraron(heroe)})
+	}
+}
