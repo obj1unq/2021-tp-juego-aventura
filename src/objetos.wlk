@@ -94,33 +94,27 @@ class Armadura {
 //)
 /////////////////////////////////////////////////////////////////////////////////
 class Pocion {
-	const property nombrePocion
-	const property tipoPocion
-	const property potenciaPocion
-	var property image;
-	var property position;
+	const potencia = 0
+	const tipo = null // pocionVida o pocionMana
 	
-	method nombrePocion() {return nombrePocion}
-	method tipoPocion() {return tipoPocion}
-	method potenciaPocion() {return potenciaPocion}
+	method potenciaPocion() {return potencia}
+	method tipoPocion() {return tipo}
 	method interactuar(heroe, objeto) {heroe.guardarObjetoEnLaMochila(objeto)}
 }
- // Defino algunas pociones
-//const pocionVida = new Pocion(
-//	nombrePocion = "Pocion de Vida",
-//	tipoPocion   = "vida",
-//	potenciaPocion = 25,
-//	image  		   = "",
-//	position 	   = game.at(1,1)
-//)
-//
-//const pocionMana = new Pocion(
-//	nombrePocion = "Pocion de Mana",
-//	tipoPocion = "mana",
-//	potenciaPocion = 15,
-//	image = "",
-//	position = game.at(2,2)
-//)
+
+object pocionVida inherits Pocion {
+	const imagen = null
+	
+	override method potenciaPocion() {return 20}
+	method tipoPocion() {return "vida"}
+}
+
+object pocionMana inherits Pocion {
+	const imagen = null
+	
+	override method potenciaPocion() {return 20}
+	method tipoPocion() {return "mana"}
+}
 /////////////////////////////////////////////////////////////////////////////////
 class Cofre {
 	var property position;

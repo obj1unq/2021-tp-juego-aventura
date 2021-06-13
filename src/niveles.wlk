@@ -48,45 +48,6 @@ class Pantalla {
 
 
 object pantallaSeleccion inherits Pantalla {
-	var warrior = new Heroe(
-					image = "personajePrincipal.png", 
-					position= game.at(2, 4),
-					nivelActual = nivelInicial,
-					modificadorAtaque = 1.4,
-					modificadorDefensa = 1.1,
-					maxVida = 200,
-					actualVida = 100,
-					maxMana = 30,
-					actualMana = 30, 
-					pantalla = self
-		)
-	
-		var tank = new Heroe(
-				image = "personajePrincipal.png", 
-				position= game.at(4, 4), 
-				nivelActual = nivelInicial,
-				modificadorAtaque = 1.1,
-				modificadorDefensa = 1.6,
-				maxVida = 250,
-				actualVida = 100,
-				maxMana = 20,
-				actualMana = 20, 
-				pantalla = self
-		)
-	
-		var wizzard = new Heroe(
-				image = "personajePrincipal.png", 
-				position= game.at(6, 4), 
-				nivelActual = nivelInicial,
-				modificadorAtaque = 0.8,
-				modificadorDefensa = 0.9,
-				maxVida = 150,
-				actualVida = 100,
-				maxMana = 100,
-				actualMana = 100, 
-				pantalla = self
-		)
-
 	var property heroes = [ warrior, tank, wizzard ]
 	
 	override method image() = "flechaSeleccion.png"
