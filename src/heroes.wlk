@@ -7,16 +7,17 @@ import gestorDeObjetos.*
 class Heroe {
 	var property mochila = #{}
 	var property libroDeHechizos = #{}
-	var property manoIzquierda = punio
-	var property cuerpo = armaduraInicial
+	var property manoIzquierda = null
+	var property cuerpo = null
 	var property modificadorAtaque
 	var property modificadorDefensa
 	var property maxVida
-	var property actualVida
+	var property actualVida = 100
 	var property maxMana
-	var property actualMana
+	var property actualMana = 1000
 	
 	var property nivelActual 
+	var property pantalla
 	var property image = null;
 	var property position = null;
 	
@@ -59,7 +60,7 @@ class Heroe {
 	
 	method tirarEquipoAReemplazar(equipo) {
 		gestorDeObjetos.agregarEnPosicionDelPersonaje(self, equipo)
-		self.manoIzquierda(punio)		
+		self.manoIzquierda(null)		
 	}
 	
 	method aprenderHechizo(hechizo){
@@ -70,30 +71,30 @@ class Heroe {
 		}
 	}
 	
-	method beberPocionVida() {
-		if (self.hayPocionEnLaMochila(pocionVida) && (not self.heroeConVidaMaxima())) {
-			self.beberPocion(self.sacarPocion(pocionVida))
-		}
-	}
-	
-	method beberPocionMana() {
-		if (self.hayPocionEnLaMochila(pocionMana) && (not self.heroeConManaMaxima())) {
-			self.beberPocion(pocionMana)
-		}
-	}
+//	method beberPocionVida() {
+//		if (self.hayPocionEnLaMochila(pocionVida) && (not self.heroeConVidaMaxima())) {
+//			self.beberPocion(self.sacarPocion(pocionVida))
+//		}
+//	}
+//	
+//	method beberPocionMana() {
+//		if (self.hayPocionEnLaMochila(pocionMana) && (not self.heroeConManaMaxima())) {
+//			self.beberPocion(pocionMana)
+//		}
+//	}
 	
 	method sacarPocion(pocion) {
 		self.removerPocionDeLaMochila(pocion)
 		return self.mochila(pocion)
 	}
 	
-	method beberPocion(pocion) {
-		if (pocion == pocionVida) {
-			self.incrementarVida(pocion)
-		} else {
-			self.incrementarMana(pocion)
-		}
-	}
+//	method beberPocion(pocion) {
+//		if (pocion == pocionVida) {
+//			self.incrementarVida(pocion)
+//		} else {
+//			self.incrementarMana(pocion)
+//		}
+//	}
 	
 	method incrementarVida(pocion) {
 		if (self.actualVida() + pocion.potenciaPocion() > self.maxVida()) {
@@ -128,47 +129,74 @@ class Heroe {
 	}
 	
 	method irA(x, y) {
-		if (x>7 && y>7) {
-			position = game.at(self.position().x(), self.position().y())
-		} else {
+		if (not nivelActual.esPosicionProhibida(game.at(x,y))) {
 			position = game.at(x, y)
 		}
 	}
+	// hay que establecer qué pasa cuando se pierde y cuando se gana
+	// atributo pantalla?
+	// la pantalla cuando se setea? 
+	// si gano siempre deberia mostrar un WIN e ir a la pantalla de seleccion otra vez (con boss)
+	// si gano siempre deberia volver al nivel inicial (con enemigos)
+	// si pierdo siempre se vuelve a pantalla de seleccion
+	
+	// deberia crear otra pantalla que seria pantalla de win? en la pantalla de win muestro la imagen y vuelvo a la seleccion
+	
+	
+	method atacar(enemigo) {
+		enemigo.recibirDanio(self)
+	}
+	
+	method recibirDanio(enemigo) {
+		self.yaGano(enemigo)
+		// de donde saco el nivel de fuerza + danio?
+		actualVida = (actualVida - enemigo.nivelDeDanio()).max(0)
+	}
+	
+	method yaGano(enemigo) {
+		if (actualVida == 0) {
+			enemigo.ganar(self)
+		}
+	}
+	
+	method ganar(enemigo) {
+		gestorDeEnemigos.remover(enemigo)
+	}
 }
 
-const Warrior = new Heroe(
-	image = "personajePrincipal.png", 
-	position= game.at(2, 2),
-	nivelActual = nivelInicial,
-	modificadorAtaque = 1.4,
-	modificadorDefensa = 1.1,
-	maxVida = 200,
-	actualVida = 200,
-	maxMana = 30,
-	actualMana = 30
-)
-
-const Tank = new Heroe(
-	image = "personajePrincipal.png", 
-	position= game.at(4, 4), 
-	nivelActual = nivelInicial,
-	modificadorAtaque = 1.1,
-	modificadorDefensa = 1.6,
-	maxVida = 250,
-	actualVida = 250,
-	maxMana = 20,
-	actualMana = 20
-)
-
-const Wizzard = new Heroe(
-	image = "personajePrincipal.png", 
-	position= game.at(2, 4), 
-	nivelActual = nivelInicial,
-	modificadorAtaque = 0.8,
-	modificadorDefensa = 0.9,
-	maxVida = 150,
-	actualVida = 150,
-	maxMana = 100,
-	actualMana = 100
-)
+//const Warrior = new Heroe(
+//	image = "personajePrincipal.png", 
+//	position= game.at(2, 2),
+//	nivelActual = nivelInicial,
+//	modificadorAtaque = 1.4,
+//	modificadorDefensa = 1.1,
+//	maxVida = 200,
+//	actualVida = 200,
+//	maxMana = 30,
+//	actualMana = 30
+//)
+//
+//const Tank = new Heroe(
+//	image = "personajePrincipal.png", 
+//	position= game.at(4, 4), 
+//	nivelActual = nivelInicial,
+//	modificadorAtaque = 1.1,
+//	modificadorDefensa = 1.6,
+//	maxVida = 250,
+//	actualVida = 250,
+//	maxMana = 20,
+//	actualMana = 20
+//)
+//
+//const Wizzard = new Heroe(
+//	image = "personajePrincipal.png", 
+//	position= game.at(2, 4), 
+//	nivelActual = nivelInicial,
+//	modificadorAtaque = 0.8,
+//	modificadorDefensa = 0.9,
+//	maxVida = 150,
+//	actualVida = 150,
+//	maxMana = 100,
+//	actualMana = 100
+//)
 /////////////////////////////////////////////////////////////////////////////////
