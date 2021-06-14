@@ -55,7 +55,7 @@ object armadura1 {
 	}
 
 	method teEncontraron(heroe) {
-		heroe.equiparArma(self)
+
 	}
 
 }
