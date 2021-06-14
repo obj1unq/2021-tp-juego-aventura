@@ -124,19 +124,29 @@ object pocionMana {
 //		return nombrePocion
 //	}
 //
-//	method tipoPocion() {
-//		return tipoPocion
-//	}
-//
-//	method potenciaPocion() {
-//		return potenciaPocion
-//	}
-//
-//	method interactuar(heroe, objeto) {
-//		heroe.guardarObjetoEnLaMochila(objeto)
-//	}
-//
-//}
+/////////////////////////////////////////////////////////////////////////////////
+class Pocion {
+	const potencia = 0
+	const tipo = null // pocionVida o pocionMana
+	
+	method potenciaPocion() {return potencia}
+	method tipoPocion() {return tipo}
+	method interactuar(heroe, objeto) {heroe.guardarObjetoEnLaMochila(objeto)}
+}
+
+object pocionVida inherits Pocion {
+	const imagen = null
+	
+	override method potenciaPocion() {return 20}
+	method tipoPocion() {return "vida"}
+}
+
+object pocionMana inherits Pocion {
+	const imagen = null
+	
+	override method potenciaPocion() {return 20}
+	method tipoPocion() {return "mana"}
+}
 /////////////////////////////////////////////////////////////////////////////////
 class Cofre {
 
