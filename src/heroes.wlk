@@ -27,7 +27,7 @@ class Heroe {
     }
 	
 	method tomar(objeto) {
-        objeto.interactuar(self, objeto)
+        objeto.interactuar(self)
     }
 
     method objetoDebajo() {
@@ -53,10 +53,8 @@ class Heroe {
 	}
 	
 	method guardarObjetoEnLaMochila(objeto){
-		//gestorDeObjetos.remover(objeto)
-		mochila.add(objeto)
-		keyboard.c().onPressDo({ gestorDeObjetos.remover(objeto)})
-		
+		gestorDeObjetos.remover(objeto)
+		mochila.add(objeto)		
 	}
 	
 	method tirarEquipoAReemplazar(equipo) {
@@ -91,36 +89,35 @@ class Heroe {
 	
 	method sacarPocionTipo_(pocionTipo) {
 		self.removerPocionDeLaMochila(pocionTipo)
-		return self.mochila(pocionTipo)
 	}
 	
 	method removerPocionDeLaMochila(pocion) {
 		self.mochila().remove(pocion)
 	}
 	
-	method beberPocionTipo_(pocionTipo) {
-		if (pocionTipo == pocionVida.tipoPocion()) {
-			self.incrementarVida(pocionVida.potenciaPocion())
+	method beberPocionTipo_(pocion) {
+		if (pocion == pocionVida) {
+			self.incrementarVida()
 		} else {
-			self.incrementarMana(pocionMana.potenciaPocion())
+			self.incrementarMana()
 		}
 	}
 	//############################################################## FIN Mensajes con Pociones
 	
 	//############################################################## Mensajes modificadores y de estado
-	method incrementarVida(pocion) {
-		if (self.actualVida() + pocion.potenciaPocion() > self.maxVida()) {
+	method incrementarVida() {
+		if (self.actualVida() + 30 > self.maxVida()) {
 			self.actualVida(self.maxVida())
 		} else {
-			self.actualVida(self.actualVida() + pocion.potenciaPocion())
+			self.actualVida(self.actualVida() + 30)
 		}
 	}
 	
-	method incrementarMana(pocion) {
-		if (self.actualMana() + pocion.potenciaPocion() > self.maxMana()) {
+	method incrementarMana() {
+		if (self.actualMana() + 30 > self.maxMana()) {
 			self.actualMana(self.maxMana())
 		} else {
-			self.actualMana(self.actualMana() + pocion.potenciaPocion())
+			self.actualMana(self.actualMana() + 30)
 		}
 	}
 	
