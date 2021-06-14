@@ -102,10 +102,10 @@ object pantallaSeleccion inherits Pantalla {
 	}
 
 	method selccionarHeroe() {
-		keyboard.left().onPressDo({ self.moverIzquierda()})
-		//keyboard.left().onPressDo({ self.moverDerecha()}) ESTE SERIA EL CORRECTO
-		keyboard.right().onPressDo({ self.moverDerecha()})
-		//keyboard.right().onPressDo({ self.moverIzquierda()}) ESTE SERIA EL CORRECTO
+		// keyboard.left().onPressDo({ self.moverIzquierda()})
+		keyboard.left().onPressDo({ self.moverDerecha()}) // ESTE SERIA EL CORRECTO
+			// keyboard.right().onPressDo({ self.moverDerecha()})
+		keyboard.right().onPressDo({ self.moverIzquierda()}) // ESTE SERIA EL CORRECTO
 		keyboard.enter().onPressDo({ self.seleccionar()})
 	}
 
@@ -147,11 +147,8 @@ object nivelInicial inherits Pantalla {
 	const cofreVerde = new Cofre(imagenCerrado = "Green Chest Closed.png", imagenAbierto = "Green Chest Open.png", position = game.at(6.5, 9))
 	const cofreAzul2 = new Cofre(imagenCerrado = "Blue CHest Closed.png", imagenAbierto = "Blue Chest Open.png", position = game.at(1, 9))
 // walter
-	
-
-	
 	var enemigosIniciales = [ esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2 ]
-   
+
 	;
 	
 	override method image() = "escenario.png"
@@ -162,10 +159,11 @@ object nivelInicial inherits Pantalla {
 		enemigosIniciales = if (gestorDeEnemigos.enemigos().isEmpty()) enemigosIniciales else gestorDeEnemigos.enemigos()
 		gestorDeObjetos.agregarObjetos([ calavera, cofreAzul, cofreRojo, cofreVerde, cofreAzul2 ])
 		gestorDeEnemigos.agregarEnemigos(enemigosIniciales)
-	
 		game.addVisual(espada1)
 		game.addVisual(hacha1)
 		game.addVisual(armadura1)
+		game.addVisual(pocionVida)
+		game.addVisual(pocionMana)
 	}
 
 	override method cancion() = musicaInicio

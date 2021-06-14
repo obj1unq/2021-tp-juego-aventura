@@ -11,10 +11,15 @@ object espada1 {
 	}
 
 	method teEncontraron(heroe) {
+		self.interactuar(heroe)
 	}
 
 	method danioDeArma() {
 		return danioArma
+	}
+
+	method interactuar(heroe) {
+		heroe.guardarObjetoEnLaMochila(self)
 	}
 
 }
@@ -26,6 +31,11 @@ object hacha1 {
 	const property danioArma = 130
 
 	method teEncontraron(heroe) {
+		self.interactuar(heroe)
+	}
+
+	method interactuar(heroe) {
+		heroe.guardarObjetoEnLaMochila(self)
 	}
 
 	method image() {
@@ -44,8 +54,6 @@ object armadura1 {
 	const property position = game.at(2, 3)
 	const property defensaArmadura = 200
 
-	
-
 	method image() {
 		return "armadura.png"
 	}
@@ -55,41 +63,80 @@ object armadura1 {
 	}
 
 	method teEncontraron(heroe) {
+		self.interactuar(heroe)
+	}
 
+	method interactuar(heroe) {
+		heroe.guardarObjetoEnLaMochila(self)
+	}
+
+}
+
+
+object pocionVida {
+
+	const property position = game.at(7, 5)
+
+	method image() {
+		return "potionGreen.png"
+	}
+
+	method teEncontraron(heroe) {
+		self.interactuar(heroe)
+	}
+
+	method interactuar(heroe) {
+		heroe.guardarObjetoEnLaMochila(self)
+	}
+
+}
+object pocionMana {
+
+	const property position = game.at(6, 3)
+
+	method image() {
+		return "potionBlue.png"
+	}
+
+	method teEncontraron(heroe) {
+		self.interactuar(heroe)
+	}
+
+	method interactuar(heroe) {
+		heroe.guardarObjetoEnLaMochila(self)
 	}
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-class Pocion {
-
-	const property nombrePocion
-	const property tipoPocion
-	const property potenciaPocion
-	var property image
-	;
-	var property position
-
-	;
-	
-	method nombrePocion() {
-		return nombrePocion
-	}
-
-	method tipoPocion() {
-		return tipoPocion
-	}
-
-	method potenciaPocion() {
-		return potenciaPocion
-	}
-
-	method interactuar(heroe, objeto) {
-		heroe.guardarObjetoEnLaMochila(objeto)
-	}
-
-}
-
+//class Pocion {
+//
+//	const property nombrePocion
+//	const property tipoPocion
+//	const property potenciaPocion
+//	var property image
+//	;
+//	var property position
+//
+//	;
+//	
+//	method nombrePocion() {
+//		return nombrePocion
+//	}
+//
+//	method tipoPocion() {
+//		return tipoPocion
+//	}
+//
+//	method potenciaPocion() {
+//		return potenciaPocion
+//	}
+//
+//	method interactuar(heroe, objeto) {
+//		heroe.guardarObjetoEnLaMochila(objeto)
+//	}
+//
+//}
 /////////////////////////////////////////////////////////////////////////////////
 class Cofre {
 
@@ -107,7 +154,6 @@ class Cofre {
 
 	method teEncontraron(heroe) {
 		estaAbierto = true
-	;
 	}
 
 }
