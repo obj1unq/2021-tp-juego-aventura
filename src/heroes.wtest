@@ -16,9 +16,11 @@ describe "Tests para los heroes" {
 		warrior.init()
 		assert.equals(200, warrior.actualVida())
 		warrior.mochila().add(pocionVida)
+		assert.equals(#{ pocionVida }, warrior.mochila())
 		warrior.actualVida(150)
 		assert.equals(150, warrior.actualVida())
 		warrior.beberPocionVida()
+		assert.equals(#{ }, warrior.mochila())
 		assert.equals(180, warrior.actualVida())
 	}
 	
