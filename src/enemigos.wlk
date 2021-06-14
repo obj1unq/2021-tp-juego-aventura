@@ -33,6 +33,7 @@ class Enemigo {
 			// heroe.nivelDanio()
 			actualVida = (actualVida - 20).max(0)
 			game.schedule(300,{heroe.recibirDanio(self)})
+			
 		}
 		
 	}

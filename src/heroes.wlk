@@ -53,8 +53,10 @@ class Heroe {
 	}
 	
 	method guardarObjetoEnLaMochila(objeto){
-		gestorDeObjetos.remover(objeto)
+		//gestorDeObjetos.remover(objeto)
 		mochila.add(objeto)
+		keyboard.c().onPressDo({ gestorDeObjetos.remover(objeto)})
+		
 	}
 	
 	method tirarEquipoAReemplazar(equipo) {
