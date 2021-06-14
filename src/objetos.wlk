@@ -1,87 +1,62 @@
 import wollok.game.*
 import niveles.*
 
-class Espada {
+object espada1 {
 
-	// const property nombreArma
-	const property danioArma
-	// const property tipoArma
-	var property image
-	;
-	var property position
+	const property position = game.at(0, 3)
+	const property danioArma = 120
 
-	;
-	
-	//method nombreDeArma() {return nombreArma}
+	method image() {
+		return "espada.png"
+	}
+
+	method teEncontraron(heroe) {
+	}
+
 	method danioDeArma() {
 		return danioArma
 	}
 
-	// method tipoDeArma() {return tipoArma}
-	method teEncontraron(heroe) {
-		heroe.equiparArma(self)
-	}
-
-// method interactuar(heroe, arma) {heroe.equiparArma(arma)}
 }
 
 //////////////////////////////////////////////////////////////////////
-class Hacha {
+object hacha1 {
 
-	// const property nombreArma
-	const property danioArma
-	// const property tipoArma
-	var property image
-	;
-	var property position
+	const property position = game.at(3, 0)
+	const property danioArma = 130
 
-	;
-	
-	//method nombreDeArma() {return nombreArma}
+	method teEncontraron(heroe) {
+	}
+
+	method image() {
+		return "hacha.png"
+	}
+
 	method danioDeArma() {
 		return danioArma
 	}
-
-	// method tipoDeArma() {return tipoArma}
-	method teEncontraron(heroe) {
-		heroe.equiparArma(self)
-	}
-//	method interactuar(heroe, arma) {
-//		heroe.equiparArma(arma)
-//	}
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-class Armadura {
+object armadura1 {
 
-	//const property nombreArmadura
-	const property defensaArmadura
-	//const property tipoArmadura
-	var property image
-	;
-	var property position
+	const property position = game.at(2, 3)
+	const property defensaArmadura = 200
 
-	;
 	
-//	method nombreDeArmadura() {
-//		return nombreArmadura
-//	}
+
+	method image() {
+		return "armadura.png"
+	}
 
 	method defensaDeArmadura() {
 		return defensaArmadura
 	}
 
-//	method tipoDeArmadura() {
-//		return tipoArmadura
-//	}
 	method teEncontraron(heroe) {
 		heroe.equiparArma(self)
 	}
-
-//	method interactuar(heroe, armadura) {
-//		heroe.equiparArmadura(armadura)
-//	}
 
 }
 

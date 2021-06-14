@@ -57,7 +57,7 @@ object pantallaSeleccion inherits Pantalla {
 
 	var warrior = new Heroe(image = "personajePrincipal.png", position = game.at(2, 4), nivelActual = nivelInicial, modificadorAtaque = 1.4, modificadorDefensa = 1.1, maxVida = 200, actualVida = 100, maxMana = 30, actualMana = 30, pantalla = self)
 	var tank = new Heroe(image = "personajePrincipal.png", position = game.at(4, 4), nivelActual = nivelInicial, modificadorAtaque = 1.1, modificadorDefensa = 1.6, maxVida = 250, actualVida = 100, maxMana = 20, actualMana = 20, pantalla = self)
-	var wizzard = new Heroe(image = "magic.png", position = game.at(6, 4), nivelActual = nivelInicial, modificadorAtaque = 0.8, modificadorDefensa = 0.9, maxVida = 150, actualVida = 100, maxMana = 100, actualMana = 100, pantalla = self)
+	var wizzard = new Heroe(image = "personajePrincipal.png", position = game.at(6, 4), nivelActual = nivelInicial, modificadorAtaque = 0.8, modificadorDefensa = 0.9, maxVida = 150, actualVida = 100, maxMana = 100, actualMana = 100, pantalla = self)
 	var property heroes = [ warrior, tank, wizzard ]
 
 	override method image() = "flechaSeleccion.png"
@@ -103,7 +103,9 @@ object pantallaSeleccion inherits Pantalla {
 
 	method selccionarHeroe() {
 		keyboard.left().onPressDo({ self.moverIzquierda()})
+		//keyboard.left().onPressDo({ self.moverDerecha()}) ESTE SERIA EL CORRECTO
 		keyboard.right().onPressDo({ self.moverDerecha()})
+		//keyboard.right().onPressDo({ self.moverIzquierda()}) ESTE SERIA EL CORRECTO
 		keyboard.enter().onPressDo({ self.seleccionar()})
 	}
 
@@ -145,11 +147,11 @@ object nivelInicial inherits Pantalla {
 	const cofreVerde = new Cofre(imagenCerrado = "Green Chest Closed.png", imagenAbierto = "Green Chest Open.png", position = game.at(6.5, 9))
 	const cofreAzul2 = new Cofre(imagenCerrado = "Blue CHest Closed.png", imagenAbierto = "Blue Chest Open.png", position = game.at(1, 9))
 // walter
-	const espada1 = new Espada(danioArma = 120, image = "espada.png", position = game.at(3, 0))
-	const hacha1 = new Hacha(danioArma = 130, image = "hacha.png", position = game.at(0, 3))
-	const armadura1 = new Armadura(defensaArmadura = 200, image = "armadura.png", position = game.at(2, 3))
-	var enemigosIniciales = [ esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2 ]
+	
 
+	
+	var enemigosIniciales = [ esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2 ]
+   
 	;
 	
 	override method image() = "escenario.png"
@@ -160,7 +162,10 @@ object nivelInicial inherits Pantalla {
 		enemigosIniciales = if (gestorDeEnemigos.enemigos().isEmpty()) enemigosIniciales else gestorDeEnemigos.enemigos()
 		gestorDeObjetos.agregarObjetos([ calavera, cofreAzul, cofreRojo, cofreVerde, cofreAzul2 ])
 		gestorDeEnemigos.agregarEnemigos(enemigosIniciales)
-		gestorDeObjetos.agregarObjetos([ espada1, hacha1,armadura1 ])
+	
+		game.addVisual(espada1)
+		game.addVisual(hacha1)
+		game.addVisual(armadura1)
 	}
 
 	override method cancion() = musicaInicio
