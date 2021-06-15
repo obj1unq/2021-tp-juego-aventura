@@ -95,6 +95,7 @@ object pantallaSeleccion inherits Pantalla {
 	method seleccionar() {
 		self.terminar()
 		nivelInicial.heroe(self.seleccionado())
+		self.seleccionado().init()
 		nivelInicial.iniciar()
 	}
 

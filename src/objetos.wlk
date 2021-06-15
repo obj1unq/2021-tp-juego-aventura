@@ -4,7 +4,7 @@ import niveles.*
 //////////////////////////////////////////////////////////////////////
 object espada1 {
 
-	const property position = game.at(0, 3)
+	var property position = game.at(0, 3)
 	const property danioArma = 120
 
 	method image() { return "espada.png" }
@@ -14,7 +14,7 @@ object espada1 {
 }
 object hacha1 {
 
-	const property position = game.at(3, 0)
+	var property position = game.at(3, 0)
 	const property danioArma = 130
 
 	method teEncontraron(heroe) { }
@@ -25,7 +25,7 @@ object hacha1 {
 /////////////////////////////////////////////////////////////////////////////////
 object armadura1 {
 
-	const property position = game.at(2, 3)
+	var property position = game.at(2, 3)
 	const property defensaArmadura = 200
 
 	method image() { return "armadura.png" }
@@ -33,10 +33,10 @@ object armadura1 {
 	method teEncontraron(heroe) { }
 	method interactuar(heroe) { heroe.equiparArmadura(self) }
 }
-/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////|
 object pocionVida {
 
-	const property position = game.at(7, 5)
+	var property position = game.at(7, 5)
 
 	method image() { return "potionGreen.png" }
 	method teEncontraron(heroe) {}
@@ -45,7 +45,7 @@ object pocionVida {
 
 object pocionMana {
 
-	const property position = game.at(6, 3)
+	var property position = game.at(6, 3)
 
 	method image() { return "potionBlue.png" }
 	method teEncontraron(heroe) {}

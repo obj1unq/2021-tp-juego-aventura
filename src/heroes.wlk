@@ -42,13 +42,17 @@ class Heroe {
     //############################################################## Mensajes con Equipo
 	method equiparArma(equipo) {
 		gestorDeObjetos.remover(equipo)
-		self.tirarEquipoAReemplazar(self.armaEquipada())
+		if ( self.tieneArmaEquipada() ) {
+			self.tirarEquipoAReemplazar(self.armaEquipada())	
+		}
 		self.armaEquipada(equipo)
 	}
 	
 	method equiparArmadura(equipo) {
 		gestorDeObjetos.remover(equipo)
-		self.tirarEquipoAReemplazar(self.armaduraEquipada())
+		if ( self.tieneArmaduraEquipada() ) {
+			self.tirarEquipoAReemplazar(self.armaduraEquipada())
+		}
 		self.armaduraEquipada(equipo)
 	}
 	
@@ -60,6 +64,14 @@ class Heroe {
 	method tirarEquipoAReemplazar(equipo) {
 		gestorDeObjetos.agregarEnPosicionDelPersonaje(self, equipo)
 		self.armaEquipada(null)		
+	}
+	
+	method tieneArmaEquipada() {
+		return self.armaEquipada() != null
+	}
+	
+	method tieneArmaduraEquipada() {
+		return self.armaduraEquipada() != null
 	}
 	
 	method aprenderHechizo(hechizo){
@@ -176,6 +188,9 @@ class Heroe {
 	}
 	//############################################################## FIN Mensajes de Combate
 }
+//const warrior = new Heroe (
+//	
+//)
 
 object warrior inherits Heroe {
 	const property image = "personajePrincipal.png"
