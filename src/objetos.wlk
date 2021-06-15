@@ -1,56 +1,91 @@
 import wollok.game.*
 import niveles.*
 
-//////////////////////////////////////////////////////////////////////
-object espada1 {
+class Arma {
 
-	var property position = game.at(0, 3)
-	const property danioArma = 120
+	var property danioArma
+	var property position
+	var property image
 
-	method image() { return "espada.png" }
-	method teEncontraron(heroe) { }
-	method danioDeArma() { return danioArma }
-	method interactuar(heroe) { heroe.equiparArma(self) }
+	method teEncontraron(heroe) {
+	}
+
+	method interactuar(heroe) {
+		heroe.equiparArma(self)
+	}
+
 }
-object hacha1 {
 
-	var property position = game.at(3, 0)
-	const property danioArma = 130
+class Espada inherits Arma {
 
-	method teEncontraron(heroe) { }
-	method interactuar(heroe) { heroe.equiparArma(self) }
-	method image() { return "hacha.png" }
-	method danioDeArma() { return danioArma }
+	override method image() {
+		return "espada.png"
+	}
+
 }
+
+class Hacha inherits Arma {
+
+	override method image() {
+		return "hacha.png"
+	}
+
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 object armadura1 {
 
 	var property position = game.at(2, 3)
 	const property defensaArmadura = 200
 
-	method image() { return "armadura.png" }
-	method defensaDeArmadura() { return defensaArmadura }
-	method teEncontraron(heroe) { }
-	method interactuar(heroe) { heroe.equiparArmadura(self) }
+	method image() {
+		return "armadura.png"
+	}
+
+	method defensaDeArmadura() {
+		return defensaArmadura
+	}
+
+	method teEncontraron(heroe) {
+	}
+
+	method interactuar(heroe) {
+		heroe.equiparArmadura(self)
+	}
+
 }
+
 /////////////////////////////////////////////////////////////////////////////////|
-object pocionVida {
+class Pocion {
 
-	var property position = game.at(7, 5)
+	var property position
+	var property image
 
-	method image() { return "potionGreen.png" }
-	method teEncontraron(heroe) {}
-	method interactuar(heroe) { heroe.guardarObjetoEnLaMochila(self) }
+	method teEncontraron(heroe) {
+	}
+
+	method interactuar(heroe) {
+		heroe.guardarObjetoEnLaMochila(self)
+	}
+
 }
 
-object pocionMana {
+class PocionVida inherits Pocion {
 
-	var property position = game.at(6, 3)
+	override method image() {
+		return "potionGreen.png"
+	}
 
-	method image() { return "potionBlue.png" }
-	method teEncontraron(heroe) {}
-	method interactuar(heroe) { heroe.guardarObjetoEnLaMochila(self) }
 }
+
+class PocionMana inherits Pocion {
+
+	override method image() {
+		return "potionBlue.png"
+	}
+
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 class Cofre {
 
