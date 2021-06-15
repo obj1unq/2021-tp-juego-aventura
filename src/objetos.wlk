@@ -5,7 +5,7 @@ class Arma {
 
 	var property danioArma
 	var property position
-	var property image
+	method image() 
 
 	method teEncontraron(heroe) {
 	}
@@ -33,14 +33,14 @@ class Hacha inherits Arma {
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-object armadura1 {
+class Armadura {
 
-	var property position = game.at(2, 3)
-	const property defensaArmadura = 200
+	var property position
+	const  defensaArmadura = 0
+	
 
-	method image() {
-		return "armadura.png"
-	}
+	method image() 
+		
 
 	method defensaDeArmadura() {
 		return defensaArmadura
@@ -54,12 +54,42 @@ object armadura1 {
 	}
 
 }
+class ArmaduraDeBronce inherits Armadura{
+	
+	 override method image() {
+		return "armadurabronce.png"
+	}
+	override method defensaDeArmadura() {
+		return 100
+	}
+}
+class ArmaduraDePlata inherits Armadura{
+	
+	 override method image() {
+		return "armaduraplata.png"
+	}
+	override method defensaDeArmadura() {
+		return 200
+	}
+}
+class ArmaduraDeOro inherits Armadura{
+	
+	 override method image() {
+		return "armaduraoro.png"
+	}
+	override method defensaDeArmadura() {
+		return 500
+	}
+}
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////|
 class Pocion {
 
 	var property position
-	var property image
+	method image()
 
 	method teEncontraron(heroe) {
 	}
