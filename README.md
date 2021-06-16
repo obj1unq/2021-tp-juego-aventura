@@ -1,5 +1,5 @@
 # **Heroes & Adventures**
-<img src="assets/readme.jpg" width="300px" />
+<img src="assets/aventura.png" width="300px" />
 
 En Heroes & Adventures tendremos la posibilidad de elegir un heroe para luchar contra enemigos y finalmente contra un Boss Final.
 Nuestro héroe podrá equiparse con distintos tipos de armas y armaduras.El juego finaliza cuando nuestro héroe es derrotado o bien este vence el Boss Final
