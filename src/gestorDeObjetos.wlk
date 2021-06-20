@@ -25,7 +25,7 @@ object gestorDeObjetos {
 
 object gestorDeEnemigos {
 	
-	const property boss = new Boss(image = "boss1.png", position = game.origin())
+	const property boss = new Boss(image = "boss1.png", position = game.origin(), maxVida = 500, actualVida = 500)
 	var property enemigos = []
 	
 	method remover(enemigo) {

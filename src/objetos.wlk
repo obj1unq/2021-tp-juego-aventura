@@ -166,43 +166,62 @@ object calavera {
 
 }
 
-class Vida {
+class Barra {
+	
+ 	const personaje
+	
+	method position()
+	
+	method image()
+	
+	method imagenAMostrar(tipo, numero) {
+		return tipo + numero + ".png"
+	} 
+	
+	method porcentaje(numActual, maxNum) {
+		return numActual * 100 / maxNum
+	}
+	
+	method numeroDeImagen(porcentaje) {
+		return if (porcentaje >= 88) "01" 
+		else if (porcentaje.between(77, 87)) "02" 
+		else if (porcentaje.between(65, 76)) "03" 
+		else if (porcentaje.between(53, 64)) "04" 
+		else if (porcentaje.between(41, 52)) "05" 
+		else if (porcentaje.between(29, 40)) "06" 
+		else if (porcentaje.between(1, 28)) "07" 
+		else if (porcentaje == 0) "08"
+	}
+}
 
-	const personaje
+class Vida inherits Barra { 
 
-	method position() {
+	override method position() {
 		return personaje.position().down(1)
 	}
 
-	method image() {
-		return "vida_" + self.imagenAMostrar() + ".png"
-	;
+	override method image() {
+		return self.imagenAMostrar("vida_", self.numeroSegunPorcentajeVida())
 	}
 
-	method imagenAMostrar() {
-		const vidaActual = personaje.actualVida()
-		return if (vidaActual >= 88) "01" else if (vidaActual.between(77, 87)) "02" else if (vidaActual.between(65, 76)) "03" else if (vidaActual.between(53, 64)) "04" else if (vidaActual.between(41, 52)) "05" else if (vidaActual.between(29, 40)) "06" else if (vidaActual.between(1, 28)) "07" else if (vidaActual == 0) "08"
+	method numeroSegunPorcentajeVida() {
+		return self.numeroDeImagen(self.porcentaje(personaje.actualVida(), personaje.maxVida()))
 	}
-
 }
 
-class Mana {
+class Mana inherits Barra {
 
-	const personaje
-
-	method position() {
+	override method position() {
 		return personaje.position().down(2)
 	}
 
-	method image() {
-		return "mana_" + self.imagenAMostrar() + ".png"
+	override method image() {
+		return self.imagenAMostrar("mana_", self.numeroSegunPorcentajeMana())
 	}
 
-	method imagenAMostrar() {
-		const manaActual = personaje.actualMana()
-		return if (manaActual >= 88) "01" else if (manaActual.between(77, 87)) "02" else if (manaActual.between(65, 76)) "03" else if (manaActual.between(53, 64)) "04" else if (manaActual.between(41, 52)) "05" else if (manaActual.between(29, 40)) "06" else if (manaActual.between(1, 28)) "07" else if (manaActual == 0) "08"
+	method numeroSegunPorcentajeMana() {
+		return self.numeroDeImagen(self.porcentaje(personaje.actualMana(), personaje.maxMana()))
 	}
-
 }
 
 object radio {

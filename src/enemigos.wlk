@@ -9,6 +9,7 @@ class Enemigo {
 	var property position;
 	var property nivelDeDanio = 10;
 	var property actualVida = 100;
+	var property maxVida = 100
 
 	method teEncontraron(heroe) {
 		pantallaPelea.cancion(musicaEnemigo)
