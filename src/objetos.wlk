@@ -1,5 +1,6 @@
 import wollok.game.*
 import niveles.*
+import gestorDeObjetos.*
 
 class Arma {
 
@@ -13,7 +14,6 @@ class Arma {
 	method interactuar(heroe) {
 		heroe.equiparArma(self)
 	}
-
 }
 
 class Espada inherits Arma {
@@ -120,11 +120,8 @@ class PocionMana inherits Pocion {
 class Cofre {
 
 	var property position
-	;
 	var property imagenAbierto
-	;
 	var property imagenCerrado
-	;
 	var property estaAbierto = false
 
 	method image() {
@@ -140,11 +137,8 @@ class Cofre {
 /////////////////////////////////////////////////////////////////////////////////
 class Objeto {
 
-	const property position
-	;
-	const property image
-
-	;
+	var property position
+	var property image
 	
 	method teEncontraron(heroe) {
 	}
@@ -291,3 +285,44 @@ object musicaBoss {
 
 }
 
+class AnimacionAtaque {
+	
+	var property image = "hit_1.png"
+	var property position = game.origin();
+	
+	method ejecutar(posicion) {
+		position = posicion
+		self.agregarVisualSiCorresponde()
+		 game.onTick(300,"recibir_danio", {
+		 	self.hit()
+		 	self.removerAnimacion()
+  		})
+	}
+	
+	method agregarVisualSiCorresponde() {
+		if (not self.estaVisualEnJuego()) gestorDeObjetos.agregar(self)
+	}
+	
+	method removerVisualSiCorresponde() {
+		if (self.estaVisualEnJuego()) gestorDeObjetos.remover(self)
+	}
+	
+	method estaVisualEnJuego() {
+		return game.hasVisual(self)
+	}
+	
+	method removerAnimacion() {
+		game.schedule(200, {
+	    		game.removeTickEvent("recibir_danio")
+	    		self.removerVisualSiCorresponde()
+	    		})
+	}
+	
+	method hit() {
+		if (image == "hit_2.png") {
+			image = "hit_1.png"
+		} else {
+			image = "hit_2.png"
+		}
+	}
+}

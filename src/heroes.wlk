@@ -16,6 +16,7 @@ class Heroe {
 	
 	var property nivelActual = nivelInicial
 	var property position = null;
+	const secuenciaAtaque = new AnimacionAtaque()
 	
 	//############################################################## Mensajes con Objetos
 	method tomarObjeto() {
@@ -41,7 +42,7 @@ class Heroe {
     
     //############################################################## Mensajes con Equipo
 	method equiparArma(equipo) {
-		gestorDeObjetos.remover(equipo)
+		inventarioPantalla.remover(equipo)
 		if ( self.tieneArmaEquipada() ) {
 			self.tirarEquipoAReemplazar(self.armaEquipada())	
 		}
@@ -49,7 +50,7 @@ class Heroe {
 	}
 	
 	method equiparArmadura(equipo) {
-		gestorDeObjetos.remover(equipo)
+		inventarioPantalla.remover(equipo)
 		if ( self.tieneArmaduraEquipada() ) {
 			self.tirarEquipoAReemplazar(self.armaduraEquipada())
 		}
@@ -57,12 +58,12 @@ class Heroe {
 	}
 	
 	method guardarObjetoEnLaMochila(objeto){
-		gestorDeObjetos.remover(objeto)
+		inventarioPantalla.remover(objeto)
 		mochila.add(objeto)		
 	}
 	
 	method tirarEquipoAReemplazar(equipo) {
-		gestorDeObjetos.agregarEnPosicionDelPersonaje(self, equipo)
+		inventarioPantalla.agregarEnPosicionDelPersonaje(self, equipo)
 		self.armaEquipada(null)		
 	}
 	
@@ -157,40 +158,32 @@ class Heroe {
 	method defensaHeroe() {return armaduraEquipada.defensaArmadura() * self.modificadorDeDefensa()}
 	//############################################################## FIN Mensajes modificadores de estado
 	
-	// hay que establecer qué pasa cuando se pierde y cuando se gana
-	// atributo pantalla?
-	// la pantalla cuando se setea? 
-	// si gano siempre deberia mostrar un WIN e ir a la pantalla de seleccion otra vez (con boss)
-	// si gano siempre deberia volver al nivel inicial (con enemigos)
-	// si pierdo siempre se vuelve a pantalla de seleccion
-	
-	// deberia crear otra pantalla que seria pantalla de win? en la pantalla de win muestro la imagen y vuelvo a la seleccion
-	
 	//############################################################## Mensajes de Combate
 	method atacarEnemigo(enemigo) {
 		enemigo.recibirDanio(self)
 	}
 	
 	method recibirDanio(enemigo) {
-		self.yaGano(enemigo)
-		// de donde saco el nivel de fuerza + danio?
+		self.chequearSiyaGano(enemigo)
+		self.ejecutarAnimacionAtaque()
 		actualVida = (actualVida - enemigo.nivelDeDanio()).max(0)
 	}
 	
-	method yaGano(enemigo) {
+	method chequearSiyaGano(enemigo) {
 		if (actualVida == 0) {
 			enemigo.ganar(self)
 		}
 	}
 	
 	method ganar(enemigo) {
-		gestorDeEnemigos.remover(enemigo)
+		inventarioPantalla.remover(enemigo)
+	}
+	
+	method ejecutarAnimacionAtaque() {
+		secuenciaAtaque.ejecutar(position)
 	}
 	//############################################################## FIN Mensajes de Combate
 }
-//const warrior = new Heroe (
-//	
-//)
 
 object warrior inherits Heroe {
 	const property image = "personajePrincipal.png"

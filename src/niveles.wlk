@@ -9,12 +9,8 @@ class Pantalla {
 
 	const property position = game.origin()
 	const property image
-	;
 	var property heroe
-	;
 	var property cancion
-
-	;
 	
 	method iniciar() {
 		self.terminar()
@@ -125,43 +121,32 @@ object pantallaSeleccion inherits Pantalla {
 object nivelInicial inherits Pantalla {
 
 	const esqueleto = new Enemigo(image = "enemigo1.png", position = game.at(1, 1))
-	;
 	const murcielago = new Enemigo(image = "murcielago.png", position = game.at(7, 7))
-	;
 	const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(2, 6))
-	;
 	const esqueleto2 = new Enemigo(image = "enemigo1.png", position = game.at(5, 5))
-	;
 	const esqueleto3 = new Enemigo(image = "enemigo1.png", position = game.at(0, 8))
-	;
 	const murcielago2 = new Enemigo(image = "murcielago.png", position = game.at(3, 3))
-	;
 	const murcielago3 = new Enemigo(image = "murcielago.png", position = game.at(8, 0))
-	;
 	const arbolFuego2 = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
-	;
 	const cofreAzul = new Cofre(imagenCerrado = "Blue CHest Closed.png", imagenAbierto = "Blue Chest Open.png", position = game.at(9, 2))
 	const cofreRojo = new Cofre(imagenCerrado = "Red Chest Closed.png", imagenAbierto = "Red Chest Open.png", position = game.at(9, 6))
 	const cofreVerde = new Cofre(imagenCerrado = "Green Chest Closed.png", imagenAbierto = "Green Chest Open.png", position = game.at(6.5, 9))
 	const cofreAzul2 = new Cofre(imagenCerrado = "Blue CHest Closed.png", imagenAbierto = "Blue Chest Open.png", position = game.at(1, 9))
-// walter
-	var enemigosIniciales = [ esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2 ]
-
-	;
+	const pocionVida = new PocionVida(position = game.at(3, 5))
+	const pocionMana = new PocionMana(position = game.at(5, 4))
+	const armaduraOro = new ArmaduraDeOro(position = game.at(1, 4))
+	const armaduraPlata = new ArmaduraDePlata(position = game.at(9, 4))
+	const armaduraBronce = new ArmaduraDeBronce(position = game.at(6, 1))
 	
+// walter
+	var objetosIniciales = [ armaduraOro, armaduraPlata, armaduraBronce, pocionVida, pocionMana, calavera, cofreAzul, cofreRojo, cofreVerde, cofreAzul2, esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2 ]
 	override method image() = "escenario.png"
 
 	override method cargarPantalla() {
-		heroe.position(game.at(0, 0))
+		heroe.position(inventarioPantalla.ultimaPosicionHeroe())
 		gestorDeObjetos.agregar(heroe)
-		enemigosIniciales = if (gestorDeEnemigos.enemigos().isEmpty()) enemigosIniciales else gestorDeEnemigos.enemigos()
-		gestorDeObjetos.agregarObjetos([ calavera, cofreAzul, cofreRojo, cofreVerde, cofreAzul2 ])
-		gestorDeEnemigos.agregarEnemigos(enemigosIniciales)
-		game.addVisual(espada1)
-		game.addVisual(hacha1)
-		game.addVisual(armadura1)
-		game.addVisual(pocionVida)
-		game.addVisual(pocionMana)
+		objetosIniciales = if (inventarioPantalla.objetos().isEmpty()) objetosIniciales else inventarioPantalla.objetos()
+		inventarioPantalla.agregarObjetos(objetosIniciales)
 	}
 
 	override method cancion() = musicaInicio
@@ -176,8 +161,6 @@ object nivelInicial inherits Pantalla {
 object pantallaPelea inherits Pantalla {
 
 	var property enemigo
-
-	;
 	
 	override method image() = "black.png"
 
@@ -201,9 +184,7 @@ object pantallaPelea inherits Pantalla {
 
 object pantallaCaminoAlBoss inherits Pantalla {
 
-	var property enemigo = gestorDeEnemigos.boss()
-
-	;
+	var property enemigo = inventarioPantalla.boss()
 	
 	override method image() = "camino_al_boss.png"
 
@@ -221,4 +202,3 @@ object pantallaCaminoAlBoss inherits Pantalla {
 	}
 
 }
-
