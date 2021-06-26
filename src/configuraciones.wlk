@@ -25,7 +25,9 @@ object configPelea {
 	var property enemigo;
 	
 	method configurarTeclas(heroe) {
-		keyboard.a().onPressDo({ heroe.atacar(enemigo)})
+		keyboard.a().onPressDo({ heroe.atacarEnemigo(enemigo)})
+		keyboard.w().onPressDo({ heroe.beberPocionVida()})
+		keyboard.q().onPressDo({ heroe.beberPocionMana()})
 	}
 	
 	method configurarColisiones(heroe) {

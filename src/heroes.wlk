@@ -7,30 +7,28 @@ import gestorDeObjetos.*
 class Heroe {
 	var property mochila = #{}
 	var property libroDeHechizos = #{}
-	var property manoIzquierda = null
-	var property cuerpo = null
-	var property modificadorAtaque
-	var property modificadorDefensa
+	var property armaEquipada = null
+	var property armaduraEquipada = null
 	var property maxVida
-	var property actualVida = 100
+	var property actualVida
 	var property maxMana
-	var property actualMana = 1000
+	var property actualMana
 	
-	var property nivelActual 
-	var property pantalla
-	var property image = null;
+	var property nivelActual = nivelInicial
 	var property position = null;
+	const secuenciaAtaque = new AnimacionAtaque()
 	
+	//############################################################## Mensajes con Objetos
 	method tomarObjeto() {
 		self.tomarObjetoQueTenesDebajo()
 	}
 	
-	method tomar(objeto) {
-        objeto.interactuar(self, objeto)
-    }
-
-    method tomarObjetoQueTenesDebajo() {
+	method tomarObjetoQueTenesDebajo() {
         self.tomar(self.objetoDebajo())
+    }
+	
+	method tomar(objeto) {
+        objeto.interactuar(self)
     }
 
     method objetoDebajo() {
@@ -40,84 +38,100 @@ class Heroe {
         }
         return objetos.head()
     }
+    //############################################################## FIN Mensajes con Objetos
     
+    //############################################################## Mensajes con Equipo
 	method equiparArma(equipo) {
-		gestorDeObjetos.remover(equipo)
-		self.tirarEquipoAReemplazar(self.manoIzquierda())
-		self.manoIzquierda(equipo)
+		inventarioPantalla.remover(equipo)
+		if ( self.tieneArmaEquipada() ) {
+			self.tirarEquipoAReemplazar(self.armaEquipada())	
+		}
+		self.armaEquipada(equipo)
 	}
 	
 	method equiparArmadura(equipo) {
-		gestorDeObjetos.remover(equipo)
-		self.tirarEquipoAReemplazar(self.cuerpo())
-		self.cuerpo(equipo)
+		inventarioPantalla.remover(equipo)
+		if ( self.tieneArmaduraEquipada() ) {
+			self.tirarEquipoAReemplazar(self.armaduraEquipada())
+		}
+		self.armaduraEquipada(equipo)
 	}
 	
 	method guardarObjetoEnLaMochila(objeto){
-		gestorDeObjetos.remover(objeto)
-		mochila.add(objeto)
+		inventarioPantalla.remover(objeto)
+		mochila.add(objeto)		
 	}
 	
 	method tirarEquipoAReemplazar(equipo) {
-		gestorDeObjetos.agregarEnPosicionDelPersonaje(self, equipo)
-		self.manoIzquierda(null)		
+		inventarioPantalla.agregarEnPosicionDelPersonaje(self, equipo)
+		self.armaEquipada(null)		
+	}
+	
+	method tieneArmaEquipada() {
+		return self.armaEquipada() != null
+	}
+	
+	method tieneArmaduraEquipada() {
+		return self.armaduraEquipada() != null
 	}
 	
 	method aprenderHechizo(hechizo){
-		if (not self.libroDeHechizos().contains(hechizo)) { //Si hechizo no esta en el libro
-			libroDeHechizos.add(hechizo) //Agregar hechizo al conjunto
-		} else {
-			self.error("El hechizo ya se encuentra en el libro")
+		libroDeHechizos.add(hechizo) //Agregar hechizo al conjunto
+	}
+	//############################################################## FIN Mensajes con Equipo
+	
+	
+	//############################################################## Mensajes con Pociones
+	method beberPocionVida() {
+		if (self.hayPocionDeTipo_EnLaMochila(pocionVida) && (not self.heroeConVidaMaxima())) {
+			self.sacarPocionTipo_(pocionVida)
+			self.beberPocionTipo_(pocionVida)
 		}
 	}
 	
-//	method beberPocionVida() {
-//		if (self.hayPocionEnLaMochila(pocionVida) && (not self.heroeConVidaMaxima())) {
-//			self.beberPocion(self.sacarPocion(pocionVida))
-//		}
-//	}
-//	
-//	method beberPocionMana() {
-//		if (self.hayPocionEnLaMochila(pocionMana) && (not self.heroeConManaMaxima())) {
-//			self.beberPocion(pocionMana)
-//		}
-//	}
-	
-	method sacarPocion(pocion) {
-		self.removerPocionDeLaMochila(pocion)
-		return self.mochila(pocion)
-	}
-	
-//	method beberPocion(pocion) {
-//		if (pocion == pocionVida) {
-//			self.incrementarVida(pocion)
-//		} else {
-//			self.incrementarMana(pocion)
-//		}
-//	}
-	
-	method incrementarVida(pocion) {
-		if (self.actualVida() + pocion.potenciaPocion() > self.maxVida()) {
-			self.actualVida(self.maxVida())
-		} else {
-			self.actualVida(self.actualVida() + pocion.potenciaPocion())
+	method beberPocionMana() {
+		if (self.hayPocionDeTipo_EnLaMochila(pocionMana) && (not self.heroeConManaMaxima())) {
+			self.sacarPocionTipo_(pocionMana)
+			self.beberPocionTipo_(pocionMana)
 		}
 	}
 	
-	method incrementarMana(pocion) {
-		if (self.actualMana() + pocion.potenciaPocion() > self.maxMana()) {
-			self.actualMana(self.maxMana())
-		} else {
-			self.actualMana(self.actualMana() + pocion.potenciaPocion())
-		}
+	method hayPocionDeTipo_EnLaMochila(pocionTipo) {
+		return self.mochila().contains(pocionTipo)
 	}
 	
-	method hayPocionEnLaMochila(pocion) {
-		return self.mochila().contains(pocion)
+	method sacarPocionTipo_(pocionTipo) {
+		self.removerPocionDeLaMochila(pocionTipo)
 	}
 	
 	method removerPocionDeLaMochila(pocion) {
 		self.mochila().remove(pocion)
+	}
+	
+	method beberPocionTipo_(pocion) {
+		if (pocion == pocionVida) {
+			self.incrementarVida()
+		} else {
+			self.incrementarMana()
+		}
+	}
+	//############################################################## FIN Mensajes con Pociones
+	
+	//############################################################## Mensajes modificadores y de estado
+	method incrementarVida() {
+		if (self.actualVida() + 30 > self.maxVida()) {
+			self.actualVida(self.maxVida())
+		} else {
+			self.actualVida(self.actualVida() + 30)
+		}
+	}
+	
+	method incrementarMana() {
+		if (self.actualMana() + 30 > self.maxMana()) {
+			self.actualMana(self.maxMana())
+		} else {
+			self.actualMana(self.actualMana() + 30)
+		}
 	}
 	
 	method heroeConVidaMaxima() {
@@ -129,74 +143,87 @@ class Heroe {
 	}
 	
 	method irA(x, y) {
+
 		if (not nivelActual.esPosicionProhibida(game.at(x,y))) {
 			position = game.at(x, y)
 		}
 	}
-	// hay que establecer qué pasa cuando se pierde y cuando se gana
-	// atributo pantalla?
-	// la pantalla cuando se setea? 
-	// si gano siempre deberia mostrar un WIN e ir a la pantalla de seleccion otra vez (con boss)
-	// si gano siempre deberia volver al nivel inicial (con enemigos)
-	// si pierdo siempre se vuelve a pantalla de seleccion
 	
-	// deberia crear otra pantalla que seria pantalla de win? en la pantalla de win muestro la imagen y vuelvo a la seleccion
+	method modificadorDeAtaque() {return 0}
 	
+	method modificadorDeDefensa() {return 0}
 	
-	method atacar(enemigo) {
+	method danioHeroe() {return armaEquipada.danioArma() * self.modificadorDeAtaque()}
+	
+	method defensaHeroe() {return armaduraEquipada.defensaArmadura() * self.modificadorDeDefensa()}
+	//############################################################## FIN Mensajes modificadores de estado
+	
+	//############################################################## Mensajes de Combate
+	method atacarEnemigo(enemigo) {
 		enemigo.recibirDanio(self)
 	}
 	
 	method recibirDanio(enemigo) {
-		self.yaGano(enemigo)
-		// de donde saco el nivel de fuerza + danio?
+		self.chequearSiyaGano(enemigo)
+		self.ejecutarAnimacionAtaque()
 		actualVida = (actualVida - enemigo.nivelDeDanio()).max(0)
 	}
 	
-	method yaGano(enemigo) {
+	method chequearSiyaGano(enemigo) {
 		if (actualVida == 0) {
 			enemigo.ganar(self)
 		}
 	}
 	
 	method ganar(enemigo) {
-		gestorDeEnemigos.remover(enemigo)
+		inventarioPantalla.remover(enemigo)
 	}
+	
+	method ejecutarAnimacionAtaque() {
+		secuenciaAtaque.ejecutar(position)
+	}
+	//############################################################## FIN Mensajes de Combate
 }
 
-//const Warrior = new Heroe(
-//	image = "personajePrincipal.png", 
-//	position= game.at(2, 2),
-//	nivelActual = nivelInicial,
-//	modificadorAtaque = 1.4,
-//	modificadorDefensa = 1.1,
-//	maxVida = 200,
-//	actualVida = 200,
-//	maxMana = 30,
-//	actualMana = 30
-//)
-//
-//const Tank = new Heroe(
-//	image = "personajePrincipal.png", 
-//	position= game.at(4, 4), 
-//	nivelActual = nivelInicial,
-//	modificadorAtaque = 1.1,
-//	modificadorDefensa = 1.6,
-//	maxVida = 250,
-//	actualVida = 250,
-//	maxMana = 20,
-//	actualMana = 20
-//)
-//
-//const Wizzard = new Heroe(
-//	image = "personajePrincipal.png", 
-//	position= game.at(2, 4), 
-//	nivelActual = nivelInicial,
-//	modificadorAtaque = 0.8,
-//	modificadorDefensa = 0.9,
-//	maxVida = 150,
-//	actualVida = 150,
-//	maxMana = 100,
-//	actualMana = 100
-//)
+object warrior inherits Heroe {
+	const property image = "personajePrincipal.png"
+	var property pantalla
+	
+	method init() {
+		self.maxVida(200)
+		self.maxMana(50)
+		self.actualVida(200)
+		self.actualMana(50)
+	}
+	override method modificadorDeAtaque() {return 1.5}
+	override method modificadorDeDefensa() {return 1.1}	
+}
+
+object tank inherits Heroe {
+	const property image = "personajePrincipal.png"
+	var property pantalla
+	
+	method init() {
+		self.maxVida(250)
+		self.maxMana(65)
+		self.actualVida(250)
+		self.actualMana(65)
+	}
+	override method modificadorDeAtaque() {return 1.1}
+	override method modificadorDeDefensa() {return 1.5}
+}
+
+object wizzard inherits Heroe {
+	const property image = "personajePrincipal.png"
+	var property pantalla
+	
+	method init() {
+		self.maxVida(125)
+		self.maxMana(250)
+		self.actualVida(125)
+		self.actualMana(250)
+	}
+	override method modificadorDeAtaque() {return 0.8}
+	override method modificadorDeDefensa() {return 0.8}
+}
 /////////////////////////////////////////////////////////////////////////////////
