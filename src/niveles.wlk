@@ -160,11 +160,11 @@ object nivelInicial inherits Pantalla {
 			
 	const murcielago = new Enemigo(
 		image = "murcielago.png", 
-		position= game.at(7,7));
+		position= game.at(7,5));
 		
 	const arbolFuego = new Enemigo(
 		image = "arboldefuego.png", 
-		position= game.at(2,6)); 
+		position= game.at(2,5)); 
 		
 	const esqueleto2 = new Enemigo(
 			image = "enemigo1.png", 
@@ -172,7 +172,7 @@ object nivelInicial inherits Pantalla {
 			
 	const esqueleto3 = new Enemigo(
 			image = "enemigo1.png", 
-			position= game.at(0,8));
+			position= game.at(1,7));
 			
 	const murcielago2 = new Enemigo(
 		image = "murcielago.png", 
@@ -180,7 +180,7 @@ object nivelInicial inherits Pantalla {
 		
 	const murcielago3 = new Enemigo(
 		image = "murcielago.png", 
-		position= game.at(8,0));
+		position= game.at(8,1));
 		
 	const arbolFuego2 = new Enemigo(
 		image = "arboldefuego.png", 
@@ -189,7 +189,7 @@ object nivelInicial inherits Pantalla {
 	const cofreAzul = new Cofre(
 		imagenCerrado = "Blue CHest Closed.png",
 		imagenAbierto ="Blue Chest Open.png", 
-		position= game.at(9,2))
+		position= game.at(9,1))
 		
 	const cofreRojo = new Cofre(
 		imagenCerrado = "Red Chest Closed.png",
@@ -199,12 +199,12 @@ object nivelInicial inherits Pantalla {
 	const cofreVerde = new Cofre(
 		imagenCerrado = "Green Chest Closed.png",
 		imagenAbierto = "Green Chest Open.png",
-		position= game.at(6.5,9))
+		position= game.at(5,7))
 		
 	const cofreAzul2 = new Cofre(
 		imagenCerrado = "Blue CHest Closed.png",
 		imagenAbierto = "Blue Chest Open.png",
-		position= game.at(1,9))
+		position= game.at(1,8))
 	
 	var enemigosIniciales = [esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2];
 	
@@ -231,7 +231,7 @@ object pantallaPelea inherits Pantalla {
 	
 	var property enemigo;
 	
-	override method  image() = "black.png"
+	override method  image() = "escenarioPelea.png"
 	
 	override method cargarPantalla() {
 		enemigo.position(game.at(6, 6))
