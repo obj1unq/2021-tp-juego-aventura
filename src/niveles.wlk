@@ -140,6 +140,7 @@ object nivelInicial inherits Pantalla {
 	
 // walter
 	var objetosIniciales = [ armaduraOro, armaduraPlata, armaduraBronce, pocionVida, pocionMana, calavera, cofreAzul, cofreRojo, cofreVerde, cofreAzul2, esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2 ]
+
 	override method image() = "escenario.png"
 
 	override method cargarPantalla() {
@@ -161,9 +162,9 @@ object nivelInicial inherits Pantalla {
 object pantallaPelea inherits Pantalla {
 
 	var property enemigo
-	
-	override method image() = "black.png"
 
+	override method  image() = "escenarioPelea.png"
+	
 	override method cargarPantalla() {
 		enemigo.position(game.at(6, 6))
 		heroe.position(game.at(2, 2))
