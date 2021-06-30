@@ -130,16 +130,13 @@ object nivelInicial inherits Pantalla {
 	const arbolFuego2 = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
 	const cofreAzul = new Cofre(imagenCerrado = "Blue CHest Closed.png", imagenAbierto = "Blue Chest Open.png", position = game.at(9, 2))
 	const cofreRojo = new Cofre(imagenCerrado = "Red Chest Closed.png", imagenAbierto = "Red Chest Open.png", position = game.at(9, 6))
-	const cofreVerde = new Cofre(imagenCerrado = "Green Chest Closed.png", imagenAbierto = "Green Chest Open.png", position = game.at(6.5, 9))
-	const cofreAzul2 = new Cofre(imagenCerrado = "Blue CHest Closed.png", imagenAbierto = "Blue Chest Open.png", position = game.at(1, 9))
 	const pocionVida = new PocionVida(position = game.at(3, 5))
 	const pocionMana = new PocionMana(position = game.at(5, 4))
 	const armaduraOro = new ArmaduraDeOro(position = game.at(1, 4))
 	const armaduraPlata = new ArmaduraDePlata(position = game.at(9, 4))
 	const armaduraBronce = new ArmaduraDeBronce(position = game.at(6, 1))
 	
-// walter
-	var objetosIniciales = [ armaduraOro, armaduraPlata, armaduraBronce, pocionVida, pocionMana, calavera, cofreAzul, cofreRojo, cofreVerde, cofreAzul2, esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2 ]
+	var objetosIniciales = [ armaduraOro, armaduraPlata, armaduraBronce, pocionVida, pocionMana, calavera, cofreAzul, cofreRojo, esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2 ]
 
 	override method image() = "escenario.png"
 
