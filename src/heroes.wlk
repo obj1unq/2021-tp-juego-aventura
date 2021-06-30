@@ -186,7 +186,7 @@ class Heroe {
 }
 
 object warrior inherits Heroe {
-	const property image = "personajePrincipal.png"
+	const property image = "warrior.png"
 	var property pantalla
 	
 	method init() {
@@ -200,7 +200,7 @@ object warrior inherits Heroe {
 }
 
 object tank inherits Heroe {
-	const property image = "personajePrincipal.png"
+	const property image = "tank.png"
 	var property pantalla
 	
 	method init() {
@@ -214,7 +214,7 @@ object tank inherits Heroe {
 }
 
 object wizzard inherits Heroe {
-	const property image = "personajePrincipal.png"
+	const property image = "wizzard.png"
 	var property pantalla
 	
 	method init() {
