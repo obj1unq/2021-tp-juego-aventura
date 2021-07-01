@@ -64,7 +64,7 @@ class Heroe {
 	
 	method tirarEquipoAReemplazar(equipo) {
 		inventarioPantalla.agregarEnPosicionDelPersonaje(self, equipo)
-		self.armaEquipada(null)		
+		//self.armaEquipada(null)		
 	}
 	
 	method tieneArmaEquipada() {
@@ -83,46 +83,39 @@ class Heroe {
 	
 	//############################################################## Mensajes con Pociones
 	method beberPocionVida() {
-		if (self.hayPocionDeTipo_EnLaMochila(pocionVida) && (not self.heroeConVidaMaxima())) {
-			self.sacarPocionTipo_(pocionVida)
-			self.beberPocionTipo_(pocionVida)
+		if (self.hayPocionDeVida()) {
+			self.removerPocionDeLaMochila(self.buscarPocionVidaEnMochila())
+			self.incrementarVida()
 		}
 	}
 	
 	method beberPocionMana() {
-		if (self.hayPocionDeTipo_EnLaMochila(pocionMana) && (not self.heroeConManaMaxima())) {
-			self.sacarPocionTipo_(pocionMana)
-			self.beberPocionTipo_(pocionMana)
+		if (self.hayPocionDeMana()) {
+			self.removerPocionDeLaMochila(self.buscarPocionManaEnMochila())
+			self.incrementarMana()
 		}
 	}
 	
-	method hayPocionDeTipo_EnLaMochila(pocionTipo) {
-		return self.mochila().contains(pocionTipo)
-	}
+	method buscarPocionVidaEnMochila() { return self.mochila().find({ pocion => not pocion.esPocionMana() }) }
 	
-	method sacarPocionTipo_(pocionTipo) {
-		self.removerPocionDeLaMochila(pocionTipo)
-	}
+	method buscarPocionManaEnMochila() { return self.mochila().find({ pocion => pocion.esPocionMana() }) }
+	
+	method hayPocionDeVida() { return self.mochila().any({ pocion => not pocion.esPocionMana() }) }
+	
+	method hayPocionDeMana() { return self.mochila().any({ pocion => pocion.esPocionMana() }) }
 	
 	method removerPocionDeLaMochila(pocion) {
 		self.mochila().remove(pocion)
 	}
 	
-	method beberPocionTipo_(pocion) {
-		if (pocion == pocionVida) {
-			self.incrementarVida()
-		} else {
-			self.incrementarMana()
-		}
-	}
 	//############################################################## FIN Mensajes con Pociones
 	
 	//############################################################## Mensajes modificadores y de estado
 	method incrementarVida() {
-		if (self.actualVida() + 30 > self.maxVida()) {
+		if (self.actualVida() + 50 > self.maxVida()) {
 			self.actualVida(self.maxVida())
 		} else {
-			self.actualVida(self.actualVida() + 30)
+			self.actualVida(self.actualVida() + 50)
 		}
 	}
 	
@@ -166,7 +159,15 @@ class Heroe {
 	method recibirDanio(enemigo) {
 		self.chequearSiyaGano(enemigo)
 		self.ejecutarAnimacionAtaque()
-		actualVida = (actualVida - enemigo.nivelDeDanio()).max(0)
+		actualVida = (actualVida - self.danioFinalEnemigo(enemigo)).max(0)
+	}
+	
+	method danioFinalEnemigo(enemigo) {
+		return if (self.defensaHeroe() >= enemigo.nivelDeDanio()) {
+			1
+		}else {
+			enemigo.nivelDeDanio() - self.defensaHeroe()
+		}
 	}
 	
 	method chequearSiyaGano(enemigo) {
@@ -182,6 +183,7 @@ class Heroe {
 	method ejecutarAnimacionAtaque() {
 		secuenciaAtaque.ejecutar(position)
 	}
+	
 	//############################################################## FIN Mensajes de Combate
 }
 

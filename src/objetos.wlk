@@ -36,15 +36,10 @@ class Hacha inherits Arma {
 class Armadura {
 
 	var property position
-	const  defensaArmadura = 0
+	const property defensaArmadura
 	
 
 	method image() 
-		
-
-	method defensaDeArmadura() {
-		return defensaArmadura
-	}
 
 	method teEncontraron(heroe) {
 	}
@@ -59,26 +54,17 @@ class ArmaduraDeBronce inherits Armadura{
 	 override method image() {
 		return "armadurabronce.png"
 	}
-	override method defensaDeArmadura() {
-		return 100
-	}
 }
 class ArmaduraDePlata inherits Armadura{
 	
 	 override method image() {
 		return "armaduraplata.png"
 	}
-	override method defensaDeArmadura() {
-		return 200
-	}
 }
 class ArmaduraDeOro inherits Armadura{
 	
 	 override method image() {
 		return "armaduraoro.png"
-	}
-	override method defensaDeArmadura() {
-		return 500
 	}
 }
 
@@ -88,8 +74,9 @@ class ArmaduraDeOro inherits Armadura{
 /////////////////////////////////////////////////////////////////////////////////|
 class Pocion {
 
+	const esPocionMana
 	var property position
-	method image()
+	const property image
 
 	method teEncontraron(heroe) {
 	}
@@ -97,22 +84,8 @@ class Pocion {
 	method interactuar(heroe) {
 		heroe.guardarObjetoEnLaMochila(self)
 	}
-
-}
-
-class PocionVida inherits Pocion {
-
-	override method image() {
-		return "potionGreen.png"
-	}
-
-}
-
-class PocionMana inherits Pocion {
-
-	override method image() {
-		return "potionBlue.png"
-	}
+	
+	method esPocionMana() { return esPocionMana }
 
 }
 

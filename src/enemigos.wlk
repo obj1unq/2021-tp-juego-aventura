@@ -7,7 +7,7 @@ class Enemigo {
 	
 	var property image;
 	var property position;
-	var property nivelDeDanio = 10;
+	var property nivelDeDanio = 20;
 	var property actualVida = 100;
 	var property maxVida = 100
 	const secuenciaAtaque = new AnimacionAtaque()
@@ -34,7 +34,7 @@ class Enemigo {
 			self.cambioPantalla(heroe)
 		} else {
 			self.ejecutarAnimacionAtaque()
-			actualVida = (actualVida - 20).max(0)
+			actualVida = (actualVida - heroe.danioHeroe()).max(0)
 			game.schedule(300,{heroe.recibirDanio(self)})
 		}
 	}
