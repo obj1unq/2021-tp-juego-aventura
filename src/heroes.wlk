@@ -63,8 +63,7 @@ class Heroe {
 	}
 	
 	method tirarEquipoAReemplazar(equipo) {
-		inventarioPantalla.agregarEnPosicionDelPersonaje(self, equipo)
-		//self.armaEquipada(null)		
+		inventarioPantalla.agregarEnPosicionDelPersonaje(self, equipo)		
 	}
 	
 	method tieneArmaEquipada() {
