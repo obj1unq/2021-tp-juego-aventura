@@ -137,7 +137,7 @@ class Barra {
 	
  	const personaje
 	
-	method position()
+	const property position
 	
 	method image()
 	
@@ -163,10 +163,6 @@ class Barra {
 
 class Vida inherits Barra { 
 
-	override method position() {
-		return personaje.position().down(1)
-	}
-
 	override method image() {
 		return self.imagenAMostrar("vida_", self.numeroSegunPorcentajeVida())
 	}
@@ -177,10 +173,6 @@ class Vida inherits Barra {
 }
 
 class Mana inherits Barra {
-
-	override method position() {
-		return personaje.position().down(2)
-	}
 
 	override method image() {
 		return self.imagenAMostrar("mana_", self.numeroSegunPorcentajeMana())
