@@ -147,6 +147,8 @@ object nivelInicial inherits Pantalla {
 		gestorDeObjetos.agregar(heroe)
 		objetosIniciales = if (inventarioPantalla.objetos().isEmpty()) objetosIniciales else inventarioPantalla.objetos()
 		inventarioPantalla.agregarObjetos(objetosIniciales)
+		gestorDeObjetos.agregar(new Vida(personaje = heroe, position=game.at(3,9)))
+		gestorDeObjetos.agregar(new Mana(personaje = heroe, position=game.at(8, 9)))
 	}
 
 	override method cancion() = musicaInicio
@@ -166,13 +168,13 @@ object pantallaPelea inherits Pantalla {
 	
 	override method cargarPantalla() {
 		enemigo.position(game.at(6, 6))
-		heroe.position(game.at(2, 2))
+		heroe.position(game.at(2, 3))
 		gestorDeObjetos.agregar(new Objeto(position = game.at(6, 1), image = "menuOpciones.png"))
 		gestorDeObjetos.agregar(enemigo)
 		gestorDeObjetos.agregar(heroe)
-		gestorDeObjetos.agregar(new Vida(personaje = enemigo))
-		gestorDeObjetos.agregar(new Vida(personaje = heroe))
-		gestorDeObjetos.agregar(new Mana(personaje = heroe))
+		gestorDeObjetos.agregar(new Vida(personaje = enemigo, position=game.at(6, 5)))
+		gestorDeObjetos.agregar(new Vida(personaje = heroe, position=game.at(2, 2)))
+		gestorDeObjetos.agregar(new Mana(personaje = heroe, position=game.at(2, 1)))
 	}
 
 	override method configurarMecanicas() {
