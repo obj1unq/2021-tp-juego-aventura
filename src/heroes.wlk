@@ -111,19 +111,11 @@ class Heroe {
 	
 	//############################################################## Mensajes modificadores y de estado
 	method incrementarVida() {
-		if (self.actualVida() + 50 > self.maxVida()) {
-			self.actualVida(self.maxVida())
-		} else {
-			self.actualVida(self.actualVida() + 50)
-		}
+		self.actualVida(self.maxVida())
 	}
 	
 	method incrementarMana() {
-		if (self.actualMana() + 30 > self.maxMana()) {
-			self.actualMana(self.maxMana())
-		} else {
-			self.actualMana(self.actualMana() + 30)
-		}
+		self.actualMana(self.maxMana())
 	}
 	
 	method heroeConVidaMaxima() {
@@ -145,13 +137,21 @@ class Heroe {
 	
 	method modificadorDeDefensa() {return 0}
 	
-	method danioHeroe() {return armaEquipada.danioArma() * self.modificadorDeAtaque()}
+	method danioHeroe() {return self.danioArmaSiTieneEquipada() * self.modificadorDeAtaque()}
 	
-	method defensaHeroe() {return armaduraEquipada.defensaArmadura() * self.modificadorDeDefensa()}
+	method defensaHeroe() {return self.danioArmaduraSiTieneEquipada() * self.modificadorDeDefensa()}
+	
+	method danioArmaSiTieneEquipada() {
+		return if (armaEquipada != null) armaEquipada.danioArma() else 8
+	}
+	
+	method danioArmaduraSiTieneEquipada() {
+		return if (armaduraEquipada != null) armaduraEquipada.defensaArmadura() else 8
+	}
 	//############################################################## FIN Mensajes modificadores de estado
 	
 	//############################################################## Mensajes de Combate
-	method atacarEnemigo(enemigo) {
+	method atacar(enemigo) {
 		enemigo.recibirDanio(self)
 	}
 	
@@ -188,7 +188,6 @@ class Heroe {
 
 object warrior inherits Heroe {
 	const property image = "warrior.png"
-	var property pantalla
 	
 	method init() {
 		self.maxVida(200)
@@ -202,7 +201,6 @@ object warrior inherits Heroe {
 
 object tank inherits Heroe {
 	const property image = "tank.png"
-	var property pantalla
 	
 	method init() {
 		self.maxVida(250)
@@ -216,7 +214,6 @@ object tank inherits Heroe {
 
 object wizzard inherits Heroe {
 	const property image = "wizzard.png"
-	var property pantalla
 	
 	method init() {
 		self.maxVida(125)
@@ -224,7 +221,8 @@ object wizzard inherits Heroe {
 		self.actualVida(125)
 		self.actualMana(250)
 	}
-	override method modificadorDeAtaque() {return 0.8}
+	
+	override method modificadorDeAtaque() {return 0.9}
 	override method modificadorDeDefensa() {return 0.8}
 }
 /////////////////////////////////////////////////////////////////////////////////

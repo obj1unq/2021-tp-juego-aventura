@@ -104,14 +104,11 @@ object pantallaSeleccion inherits Pantalla {
 	}
 
 	method reiniciarHeroes() {
-		warrior.actualVida(100)
-		warrior.actualMana(100)
+		warrior.init()
 		warrior.position(game.at(2, 4))
-		wizzard.actualVida(100)
-		wizzard.actualMana(100)
+		wizzard.init()
 		wizzard.position(game.at(4, 4))
-		tank.actualVida(100)
-		tank.actualMana(100)
+		tank.init()
 		tank.position(game.at(6, 4))
 	}
 
@@ -128,17 +125,19 @@ object nivelInicial inherits Pantalla {
 	const murcielago2 = new Enemigo(image = "murcielago.png", position = game.at(3, 3))
 	const murcielago3 = new Enemigo(image = "murcielago.png", position = game.at(8, 0))
 	const arbolFuego2 = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
-	const cofreAzul = new Cofre(imagenCerrado = "Blue CHest Closed.png", imagenAbierto = "Blue Chest Open.png", position = game.at(9, 2))
-	const cofreRojo = new Cofre(imagenCerrado = "Red Chest Closed.png", imagenAbierto = "Red Chest Open.png", position = game.at(9, 6))
+	const cofreAzul = new Cofre(imagenCerrado = "Blue CHest Closed.png", imagenAbierto = "Blue Chest Open.png", position = game.at(9, 2), image = null)
+	const cofreRojo = new Cofre(imagenCerrado = "Red Chest Closed.png", imagenAbierto = "Red Chest Open.png", position = game.at(9, 6), image = null)
 	const pocionVida = new Pocion(esPocionMana = false, position = game.at(3, 5), image = "potionGreen.png")
+	const pocionVida2 = new Pocion(esPocionMana = false, position = game.at(4, 7), image = "potionGreen.png")
+	const pocionVida3 = new Pocion(esPocionMana = false, position = game.at(4, 0), image = "potionGreen.png")
 	const pocionMana = new Pocion(esPocionMana = false, position = game.at(5, 4), image = "potionBlue.png")
-	const armaduraOro = new ArmaduraDeOro(defensaArmadura = 10, position = game.at(1, 4))
-	const armaduraPlata = new ArmaduraDePlata(defensaArmadura = 7, position = game.at(9, 4))
-	const armaduraBronce = new ArmaduraDeBronce(defensaArmadura = 4, position = game.at(6, 1))
-	const armaEspada = new Espada(danioArma = 15, position = game.at(1, 5))
-	const armaHacha = new Hacha(danioArma = 12, position = game.at(9, 3))
+	const armaduraOro = new Armadura(defensaArmadura = 10, position = game.at(1, 4), image = "armaduraoro.png")
+	const armaduraPlata = new Armadura(defensaArmadura = 7, position = game.at(9, 4), image = "armaduraplata.png")
+	const armaduraBronce = new Armadura(defensaArmadura = 4, position = game.at(6, 1), image =  "armadurabronce.png")
+	const armaEspada = new Arma(danioArma = 15, position = game.at(1, 5), image = "espada.png")
+	const armaHacha = new Arma(danioArma = 12, position = game.at(9, 3), image = "hacha.png")
 	
-	var objetosIniciales = [ armaduraOro, armaduraPlata, armaduraBronce, pocionVida, pocionMana, calavera, cofreAzul, cofreRojo, esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2, armaEspada, armaHacha ]
+	var objetosIniciales = [ armaduraOro, armaduraPlata, armaduraBronce, pocionVida, pocionVida2, pocionVida3, pocionMana, calavera, cofreAzul, cofreRojo, esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2, armaEspada, armaHacha ]
 
 	override method image() = "escenario.png"
 
@@ -147,8 +146,8 @@ object nivelInicial inherits Pantalla {
 		gestorDeObjetos.agregar(heroe)
 		objetosIniciales = if (inventarioPantalla.objetos().isEmpty()) objetosIniciales else inventarioPantalla.objetos()
 		inventarioPantalla.agregarObjetos(objetosIniciales)
-		gestorDeObjetos.agregar(new Vida(personaje = heroe, position=game.at(3,9)))
-		gestorDeObjetos.agregar(new Mana(personaje = heroe, position=game.at(8, 9)))
+		gestorDeObjetos.agregar(new Vida(personaje = heroe, position=game.at(3,9), image = null))
+		gestorDeObjetos.agregar(new Mana(personaje = heroe, position=game.at(8, 9), image = null))
 	}
 
 	override method cancion() = musicaInicio
@@ -172,9 +171,9 @@ object pantallaPelea inherits Pantalla {
 		gestorDeObjetos.agregar(new Objeto(position = game.at(6, 1), image = "menuOpciones.png"))
 		gestorDeObjetos.agregar(enemigo)
 		gestorDeObjetos.agregar(heroe)
-		gestorDeObjetos.agregar(new Vida(personaje = enemigo, position=game.at(6, 5)))
-		gestorDeObjetos.agregar(new Vida(personaje = heroe, position=game.at(2, 2)))
-		gestorDeObjetos.agregar(new Mana(personaje = heroe, position=game.at(2, 1)))
+		gestorDeObjetos.agregar(new Vida(personaje = enemigo, position=game.at(6, 5), image = null))
+		gestorDeObjetos.agregar(new Vida(personaje = heroe, position=game.at(2, 2), image = null))
+		gestorDeObjetos.agregar(new Mana(personaje = heroe, position=game.at(2, 1), image = null))
 	}
 
 	override method configurarMecanicas() {

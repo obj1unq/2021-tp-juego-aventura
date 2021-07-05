@@ -3,51 +3,119 @@ import objetos.*
 import wollok.game.*
 import hechizos.*
 import gestorDeObjetos.*
+import enemigos.*
 
 describe "Tests para los heroes" {
 	
 	
 	fixture {
 		game.clear()
-	//	gestorDeObjetos.agregar(Warrior)
+		warrior.position(game.origin())
+		gestorDeObjetos.agregar(warrior)
+		warrior.init()
 	}
 	
-	test "heroe bebe pocion vida" {
-		warrior.init()
+	test "heroe equipa y bebe pocion" {
+		const pocionVida = new Pocion(esPocionMana = false, position = game.at(0, 0), image = "potionGreen.png")
+		gestorDeObjetos.agregar(pocionVida)
 		assert.equals(200, warrior.actualVida())
-		warrior.mochila().add(pocionVida)
+		warrior.tomarObjeto()
 		assert.equals(#{ pocionVida }, warrior.mochila())
 		warrior.actualVida(150)
 		assert.equals(150, warrior.actualVida())
 		warrior.beberPocionVida()
 		assert.equals(#{ }, warrior.mochila())
-		assert.equals(180, warrior.actualVida())
+		assert.equals(200, warrior.actualVida())
 	}
 	
-//	test "Heroe toma un arma y se lo equipa" {
-//		gestorDeObjetos.agregar(dagaInicial)
-//		Warrior.tomarObjetoQueTenesDebajo()
-//		
-//		assert.equals(dagaInicial, Warrior.manoIzquierda())
-//		assert.equals(punio, Warrior.objetoDebajo())
-//	}
-//	
-//	test "Heroe toma una poción y se lo equipa" {
-//		gestorDeObjetos.agregar(pocionMana)
-//		Warrior.tomarObjetoQueTenesDebajo()
-//		
-//		assert.equals(#{pocionMana}, Warrior.mochila())
-//		assert.throwsExceptionWithMessage("No hay nada acá", {Warrior.tomarObjetoQueTenesDebajo()})
-//	}
-//	
-//	test "Heroe toma una armadura y se lo equipa" {
-//		gestorDeObjetos.agregar(pecheraDePlacas)
-//		Warrior.tomarObjetoQueTenesDebajo()
-//		
-//		assert.equals(pecheraDePlacas, Warrior.cuerpo())
-//		assert.equals(armaduraInicial, Warrior.objetoDebajo())
-//	}
-//	
+	test "Heroe toma un arma y se lo equipa" {
+		const armaHacha = new Arma(danioArma = 12, position = game.at(0, 0), image = "hacha.png")
+		gestorDeObjetos.agregar(armaHacha)
+		warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.equals(armaHacha, warrior.armaEquipada())
+	}
+	
+	test "Heroe se equipa con otra arma diferente al que tiene" {
+		const armaHacha = new Arma(danioArma = 12, position = game.at(0, 0), image = "hacha.png")
+		warrior.armaEquipada(armaHacha)
+		
+		const armaEspada = new Arma(danioArma = 15, position = game.at(0, 0), image = "espada.png")
+		
+		gestorDeObjetos.agregar(armaEspada)
+		warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.equals(armaEspada, warrior.armaEquipada())
+		assert.equals(armaHacha, warrior.objetoDebajo())
+	}
+	
+	test "Heroe toma una armadura y se lo equipa" {
+		const armaduraBronce = new Armadura(defensaArmadura = 4, position = game.at(0, 0), image =  "armadurabronce.png")
+		gestorDeObjetos.agregar(armaduraBronce)
+		warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.equals(armaduraBronce, warrior.armaduraEquipada())
+	}
+	
+	test "Heroe se equipa con otra armadura diferente al que tiene" {
+		const armaduraOro = new Armadura(defensaArmadura = 10, position = game.at(1, 4), image = "armaduraoro.png")
+		warrior.armaduraEquipada(armaduraOro)
+		
+		const armaduraPlata = new Armadura(defensaArmadura = 7, position = game.at(0, 0), image = "armaduraplata.png")
+		
+		gestorDeObjetos.agregar(armaduraPlata)
+		warrior.tomarObjetoQueTenesDebajo()
+		
+		assert.equals(armaduraPlata, warrior.armaduraEquipada())
+		assert.equals(armaduraOro, warrior.objetoDebajo())
+	}
+	
+	test "No hay nada que tomar" {
+		assert.throwsException({warrior.tomarObjetoQueTenesDebajo()})
+	}
+	
+	test "Heroe recibe danio de enemigo sin armadura equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		arbolFuego.atacar(warrior)
+		
+		assert.that(warrior.actualVida() < 200)
+		//nivel danio: 10 - defensa heroe: (defensa sin armadura: 8 * modificador de defensa: 1,1) => 200 - 1,2 => 198,8
+		assert.equals(198.8, warrior.actualVida())
+	}
+	
+	test "Enemigo recibe danio de heroe sin arma equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		warrior.atacar(arbolFuego)
+		
+		assert.that(arbolFuego.actualVida() < 100)
+		// (danio sin arma: 8 * modificador de ataque: 1,5) = 12 => 100 - 12 => 88
+		assert.equals(88, arbolFuego.actualVida())
+	}
+	
+	test "Heroe recibe danio de enemigo con armadura equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		const armaduraOro = new Armadura(defensaArmadura = 10, position = game.at(1, 4), image = "armaduraoro.png")
+		warrior.armaduraEquipada(armaduraOro)
+		
+		arbolFuego.atacar(warrior)
+		
+		assert.that(warrior.actualVida() < 200)
+		//nivel danio: 10 - defensa heroe: (defensa armadura: 10 * modificador de defensa: 1,1) => 200 - 1 => 199
+		assert.equals(199, warrior.actualVida())
+	}
+	
+	test "Enemigo recibe danio de heroe con arma equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		const armaHacha = new Arma(danioArma = 12, position = game.at(0, 0), image = "hacha.png")
+		warrior.armaEquipada(armaHacha)
+		
+		warrior.atacar(arbolFuego)
+		
+		assert.that(arbolFuego.actualVida() < 100)
+		// (danio arma: 12 * modificador de ataque: 1,5) = 18 => 100 - 18 => 82
+		assert.equals(82, arbolFuego.actualVida())
+	}
+	
 //	test "Heroe aprende un hechizo" {
 //		gestorDeObjetos.agregar(rayoDeHielo)
 //		Warrior.tomarObjetoQueTenesDebajo()
@@ -61,11 +129,7 @@ describe "Tests para los heroes" {
 //		
 //		assert.throwsException({Warrior.tomarObjetoQueTenesDebajo()})
 //	}
-//	
-//	test "No hay nada que tomar" {
-//		assert.throwsException({Warrior.tomarObjetoQueTenesDebajo()})
-//	}
-//	
+
 //	test "Heroe bebe poción" {
 //		Warrior.actualMana(15)
 //		gestorDeObjetos.agregar(pocionMana)
