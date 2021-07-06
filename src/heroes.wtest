@@ -12,6 +12,8 @@ describe "Tests para los heroes" {
 		game.clear()
 		warrior.position(game.origin())
 		gestorDeObjetos.agregar(warrior)
+		wizzard.init()
+		tank.init()
 		warrior.init()
 	}
 	
@@ -74,7 +76,7 @@ describe "Tests para los heroes" {
 		assert.throwsException({warrior.tomarObjetoQueTenesDebajo()})
 	}
 	
-	test "Heroe recibe danio de enemigo sin armadura equipada" {
+	test "Heroe (warrior) recibe danio de enemigo sin armadura equipada" {
 		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
 		arbolFuego.atacar(warrior)
 		
@@ -83,7 +85,7 @@ describe "Tests para los heroes" {
 		assert.equals(198.8, warrior.actualVida())
 	}
 	
-	test "Enemigo recibe danio de heroe sin arma equipada" {
+	test "Enemigo (warrior) recibe danio de heroe sin arma equipada" {
 		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
 		warrior.atacar(arbolFuego)
 		
@@ -92,7 +94,7 @@ describe "Tests para los heroes" {
 		assert.equals(88, arbolFuego.actualVida())
 	}
 	
-	test "Heroe recibe danio de enemigo con armadura equipada" {
+	test "Heroe (warrior) recibe danio de enemigo con armadura equipada" {
 		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
 		const armaduraOro = new Armadura(defensaArmadura = 10, position = game.at(1, 4), image = "armaduraoro.png")
 		warrior.armaduraEquipada(armaduraOro)
@@ -104,7 +106,7 @@ describe "Tests para los heroes" {
 		assert.equals(199, warrior.actualVida())
 	}
 	
-	test "Enemigo recibe danio de heroe con arma equipada" {
+	test "Enemigo (warrior) recibe danio de heroe con arma equipada" {
 		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
 		const armaHacha = new Arma(danioArma = 12, position = game.at(0, 0), image = "hacha.png")
 		warrior.armaEquipada(armaHacha)
@@ -115,6 +117,92 @@ describe "Tests para los heroes" {
 		// (danio arma: 12 * modificador de ataque: 1,5) = 18 => 100 - 18 => 82
 		assert.equals(82, arbolFuego.actualVida())
 	}
+	
+	test "Heroe (wizzard) recibe danio de enemigo sin armadura equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		arbolFuego.atacar(wizzard)
+		
+		assert.that(wizzard.actualVida() < 125)
+		//nivel danio: 10 - defensa heroe: (defensa sin armadura: 8 * modificador de defensa: 0.8) => 125 - 3.6 => 121.4
+		assert.equals(121.4, wizzard.actualVida())
+	}
+	
+	test "Enemigo (wizzard) recibe danio de heroe sin arma equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		wizzard.atacar(arbolFuego)
+		
+		assert.that(arbolFuego.actualVida() < 100)
+		// (danio sin arma: 8 * modificador de ataque: 0.9) = 12 => 100 - 7.2 => 92.8
+		assert.equals(92.8, arbolFuego.actualVida())
+	}
+	
+	test "Heroe (wizzard) recibe danio de enemigo con armadura equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		const armaduraOro = new Armadura(defensaArmadura = 10, position = game.at(1, 4), image = "armaduraoro.png")
+		wizzard.armaduraEquipada(armaduraOro)
+		
+		arbolFuego.atacar(wizzard)
+		
+		assert.that(wizzard.actualVida() < 125)
+		//nivel danio: 10 - defensa heroe: (defensa armadura: 10 * modificador de defensa: 0.8) => 125 - 2 => 123
+		assert.equals(123, wizzard.actualVida())
+	}
+	
+	test "Enemigo (wizzard) recibe danio de heroe con arma equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		const armaHacha = new Arma(danioArma = 12, position = game.at(0, 0), image = "hacha.png")
+		wizzard.armaEquipada(armaHacha)
+		
+		wizzard.atacar(arbolFuego)
+		
+		assert.that(arbolFuego.actualVida() < 100)
+		// (danio arma: 12 * modificador de ataque: 0.9) = 18 => 100 - 10.8 => 89.2
+		assert.equals(89.2, arbolFuego.actualVida())
+	}
+	
+	test "Heroe (tank) recibe danio de enemigo sin armadura equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		arbolFuego.atacar(tank)
+		
+		assert.that(tank.actualVida() < 250)
+		//nivel danio: 10 - defensa heroe: (1 (defensa heroe supera nivel danio enemigo) => 250 - 1 => 249
+		assert.equals(249, tank.actualVida())
+	}
+	
+	test "Enemigo (tank) recibe danio de heroe sin arma equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		tank.atacar(arbolFuego)
+		
+		assert.that(arbolFuego.actualVida() < 100)
+		// (danio sin arma: 8 * modificador de ataque: 1.1) = 8.8 => 100 - 8.8 => 91.2
+		assert.equals(91.2, arbolFuego.actualVida())
+	}
+	
+	test "Heroe (tank) recibe danio de enemigo con armadura equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		const armaduraOro = new Armadura(defensaArmadura = 10, position = game.at(1, 4), image = "armaduraoro.png")
+		tank.armaduraEquipada(armaduraOro)
+		
+		arbolFuego.atacar(tank)
+		
+		assert.that(tank.actualVida() < 250)
+		//nivel danio: 10 - defensa heroe: (1 (defensa heroe supera nivel danio enemigo)) => 250 - 1 => 249
+		assert.equals(249, tank.actualVida())
+	}
+	
+	test "Enemigo (tank) recibe danio de heroe con arma equipada" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		const armaHacha = new Arma(danioArma = 12, position = game.at(0, 0), image = "hacha.png")
+		tank.armaEquipada(armaHacha)
+		
+		tank.atacar(arbolFuego)
+		
+		assert.that(arbolFuego.actualVida() < 100)
+		// (danio arma: 12 * modificador de ataque: 1.1) = 13.2 => 100 - 13.2 => 86.8
+		assert.equals(86.8, arbolFuego.actualVida())
+	}
+	
+	
 	
 //	test "Heroe aprende un hechizo" {
 //		gestorDeObjetos.agregar(rayoDeHielo)
