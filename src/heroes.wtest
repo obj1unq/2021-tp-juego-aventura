@@ -1,7 +1,6 @@
 import heroes.*
 import objetos.*
 import wollok.game.*
-import hechizos.*
 import gestorDeObjetos.*
 import enemigos.*
 
@@ -17,7 +16,7 @@ describe "Tests para los heroes" {
 		warrior.init()
 	}
 	
-	test "heroe equipa y bebe pocion" {
+	test "heroe equipa y bebe pocion de vida" {
 		const pocionVida = new Pocion(esPocionMana = false, position = game.at(0, 0), image = "potionGreen.png")
 		gestorDeObjetos.agregar(pocionVida)
 		assert.equals(200, warrior.actualVida())
@@ -28,6 +27,19 @@ describe "Tests para los heroes" {
 		warrior.beberPocionVida()
 		assert.equals(#{ }, warrior.mochila())
 		assert.equals(200, warrior.actualVida())
+	}
+	
+	test "heroe equipa y bebe pocion de mana" {
+		const pocionMana = new Pocion(esPocionMana = true, position = game.at(0, 0), image = "potionBlue.png")
+		gestorDeObjetos.agregar(pocionMana)
+		assert.equals(50, warrior.actualMana())
+		warrior.tomarObjeto()
+		assert.equals(#{ pocionMana }, warrior.mochila())
+		warrior.actualMana(10)
+		assert.equals(10, warrior.actualMana())
+		warrior.beberPocionMana()
+		assert.equals(#{ }, warrior.mochila())
+		assert.equals(50, warrior.actualMana())
 	}
 	
 	test "Heroe toma un arma y se lo equipa" {
@@ -204,25 +216,17 @@ describe "Tests para los heroes" {
 	
 	
 	
-//	test "Heroe aprende un hechizo" {
-//		gestorDeObjetos.agregar(rayoDeHielo)
-//		Warrior.tomarObjetoQueTenesDebajo()
-//		
-//		assert.equals(#{rayoDeHielo}, Warrior.libroDeHechizos())
-//	}
-//	
-//	test "Heroe ya aprendió el hechizo" {
-//		gestorDeObjetos.agregar(rayoDeHielo)
-//		Warrior.tomarObjetoQueTenesDebajo()
-//		
-//		assert.throwsException({Warrior.tomarObjetoQueTenesDebajo()})
-//	}
-
-//	test "Heroe bebe poción" {
-//		Warrior.actualMana(15)
-//		gestorDeObjetos.agregar(pocionMana)
-//		Warrior.tomarObjetoQueTenesDebajo()
-//		Warrior.beberPocionMana()
-//		assert.equals(30, Warrior.actualMana())
-//	}
+	test "Heroe (warrior) lanza ataque especial" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		warrior.lanzarHechizo(arbolFuego)
+		assert.that(!warrior.hayMana())
+		// danio hecho = 50 * modificador de ataque (1.5) => 75 => 100 -75 => 
+		assert.equals(25, arbolFuego.actualVida())
+	}
+	
+	test "Heroe (warrior) no puede lanzar ataque especial" {
+		const arbolFuego = new Enemigo(image = "arboldefuego.png", position = game.at(5, 2))
+		warrior.lanzarHechizo(arbolFuego)
+		assert.throwsException({warrior.lanzarHechizo(arbolFuego)})
+	}
 }

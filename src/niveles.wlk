@@ -130,14 +130,15 @@ object nivelInicial inherits Pantalla {
 	const pocionVida = new Pocion(esPocionMana = false, position = game.at(3, 5), image = "potionGreen.png")
 	const pocionVida2 = new Pocion(esPocionMana = false, position = game.at(4, 7), image = "potionGreen.png")
 	const pocionVida3 = new Pocion(esPocionMana = false, position = game.at(4, 0), image = "potionGreen.png")
-	const pocionMana = new Pocion(esPocionMana = false, position = game.at(5, 4), image = "potionBlue.png")
+	const pocionMana = new Pocion(esPocionMana = true, position = game.at(5, 4), image = "potionBlue.png")
+	const pocionMana2 = new Pocion(esPocionMana = true, position = game.at(3, 6), image = "potionBlue.png")
 	const armaduraOro = new Armadura(defensaArmadura = 10, position = game.at(1, 4), image = "armaduraoro.png")
 	const armaduraPlata = new Armadura(defensaArmadura = 7, position = game.at(9, 4), image = "armaduraplata.png")
 	const armaduraBronce = new Armadura(defensaArmadura = 4, position = game.at(6, 1), image =  "armadurabronce.png")
 	const armaEspada = new Arma(danioArma = 15, position = game.at(1, 5), image = "espada.png")
 	const armaHacha = new Arma(danioArma = 12, position = game.at(9, 3), image = "hacha.png")
 	
-	var objetosIniciales = [ armaduraOro, armaduraPlata, armaduraBronce, pocionVida, pocionVida2, pocionVida3, pocionMana, calavera, cofreAzul, cofreRojo, esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2, armaEspada, armaHacha ]
+	var objetosIniciales = [ armaduraOro, armaduraPlata, armaduraBronce, pocionVida, pocionVida2, pocionVida3, pocionMana, pocionMana2, calavera, cofreAzul, cofreRojo, esqueleto, esqueleto2, esqueleto3, murcielago, murcielago2, murcielago3, arbolFuego, arbolFuego2, armaEspada, armaHacha ]
 
 	override method image() = "escenario.png"
 

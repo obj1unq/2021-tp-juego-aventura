@@ -27,6 +27,7 @@ object configPelea {
 	method configurarTeclas(heroe) {
 		keyboard.a().onPressDo({ heroe.atacar(enemigo)})
 		keyboard.w().onPressDo({ heroe.beberPocionVida()})
+		keyboard.s().onPressDo({ heroe.lanzarHechizo(enemigo)})
 		keyboard.q().onPressDo({ heroe.beberPocionMana()})
 	}
 	

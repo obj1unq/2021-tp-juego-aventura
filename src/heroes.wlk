@@ -1,4 +1,3 @@
-import hechizos.*
 import objetos.*
 import wollok.game.*
 import niveles.*
@@ -6,7 +5,6 @@ import gestorDeObjetos.*
 
 class Heroe {
 	var property mochila = #{}
-	var property libroDeHechizos = #{}
 	var property armaEquipada = null
 	var property armaduraEquipada = null
 	var property maxVida
@@ -73,26 +71,20 @@ class Heroe {
 	method tieneArmaduraEquipada() {
 		return self.armaduraEquipada() != null
 	}
-	
-	method aprenderHechizo(hechizo){
-		libroDeHechizos.add(hechizo) //Agregar hechizo al conjunto
-	}
 	//############################################################## FIN Mensajes con Equipo
 	
 	
 	//############################################################## Mensajes con Pociones
 	method beberPocionVida() {
-		if (self.hayPocionDeVida()) {
-			self.removerPocionDeLaMochila(self.buscarPocionVidaEnMochila())
-			self.incrementarVida()
-		}
+		self.validarSiHayPocionDeVida()
+		self.removerPocionDeLaMochila(self.buscarPocionVidaEnMochila())
+		self.incrementarVida()
 	}
 	
 	method beberPocionMana() {
-		if (self.hayPocionDeMana()) {
-			self.removerPocionDeLaMochila(self.buscarPocionManaEnMochila())
-			self.incrementarMana()
-		}
+		self.validarSiHayPocionDeMana()
+		self.removerPocionDeLaMochila(self.buscarPocionManaEnMochila())
+		self.incrementarMana()
 	}
 	
 	method buscarPocionVidaEnMochila() { return self.mochila().find({ pocion => not pocion.esPocionMana() }) }
@@ -105,6 +97,22 @@ class Heroe {
 	
 	method removerPocionDeLaMochila(pocion) {
 		self.mochila().remove(pocion)
+	}
+	
+	method validarSiHayPocionDeVida() {
+		if (!self.hayPocionDeVida()) {
+			self.error("No tenés poción de vida.")
+		}
+	}
+	
+	method validarSiHayPocionDeMana() {
+		if (!self.hayPocionDeMana()) {
+			self.error("No tenés poción de mana.")
+		}
+	}
+	
+	method hayMana() {
+		return self.actualMana() !== 0
 	}
 	
 	//############################################################## FIN Mensajes con Pociones
@@ -152,7 +160,7 @@ class Heroe {
 	
 	//############################################################## Mensajes de Combate
 	method atacar(enemigo) {
-		enemigo.recibirDanio(self)
+		enemigo.recibirDanioSiCorresponde(self)
 	}
 	
 	method recibirDanio(enemigo) {
@@ -183,6 +191,17 @@ class Heroe {
 		secuenciaAtaque.ejecutar(position)
 	}
 	
+	method lanzarHechizo(enemigo) {
+		self.validarSiHayManaParaLanzarHechizo()
+		self.actualMana(0)
+		enemigo.recibirDanioHechizo(self, 50 * self.modificadorDeAtaque()) 
+	}
+	
+	method validarSiHayManaParaLanzarHechizo() {
+		if (!self.hayMana()) {
+			self.error("No tenés maná.")
+		} 
+	}
 	//############################################################## FIN Mensajes de Combate
 }
 

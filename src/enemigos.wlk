@@ -24,19 +24,35 @@ class Enemigo {
 		heroe.recibirDanio(self)
 	}
 	
-	method recibirDanio(heroe) {
-		if (actualVida == 0) {
-			heroe.ganar(self)
-			self.cambioPantalla(heroe)
+	method recibirDanioSiCorresponde(heroe) {
+		if (self.llegoVidaACero()) {
+			self.heroeGanaYSecambiaPantalla(heroe)
 		} else {
-			self.ejecutarAnimacionAtaque()
-			actualVida = (actualVida - heroe.danioHeroe()).max(0)
-			game.schedule(300,{self.atacar(heroe)})
+			self.recibirDanioYContraatacar(heroe)
 		}
 	}
-
+	
+	method llegoVidaACero() {
+		return actualVida == 0
+	}
+	
+	method recibirDanioYContraatacar(heroe) {
+		self.recibirDanio(heroe)
+		game.schedule(300,{self.atacar(heroe)})
+	}
+	
+	method recibirDanio(heroe) {
+		self.ejecutarAnimacionAtaque()
+		actualVida = (actualVida - heroe.danioHeroe()).max(0)
+	}
+	
 	method ganar(heroe) {
 		self.terminar("perdiste.png")
+	}
+	
+	method heroeGanaYSecambiaPantalla(heroe) {
+		heroe.ganar(self)
+		self.cambioPantalla(heroe)
 	}
 	
 	method cambioPantalla(heroe) {
@@ -50,11 +66,19 @@ class Enemigo {
 			gestorDeObjetos.agregar(new Objeto(position = game.origin(), image = escenario))
 			game.schedule(3000, { => game.stop()})
 		})
-		
 	}
 	
 	method ejecutarAnimacionAtaque() {
 		secuenciaAtaque.ejecutar(position)
+	}
+	
+	method recibirDanioHechizo(heroe, danio) {
+		if (self.llegoVidaACero()) {
+			self.heroeGanaYSecambiaPantalla(heroe)
+		} else {
+			self.ejecutarAnimacionAtaque()
+			actualVida = (actualVida - danio).max(0)
+		}
 	}
 }
 
