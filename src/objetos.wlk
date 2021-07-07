@@ -2,145 +2,85 @@ import wollok.game.*
 import niveles.*
 import gestorDeObjetos.*
 
-class Arma {
-
-	var property danioArma
-	var property position
-	method image() 
-
-	method teEncontraron(heroe) {
-	}
-
-	method interactuar(heroe) {
-		heroe.equiparArma(self)
-	}
-}
-
-class Espada inherits Arma {
-
-	override method image() {
-		return "espada.png"
-	}
-
-}
-
-class Hacha inherits Arma {
-
-	override method image() {
-		return "hacha.png"
-	}
-
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-class Armadura {
-
-	var property position
-	const property defensaArmadura
-	
-
-	method image() 
-
-	method teEncontraron(heroe) {
-	}
-
-	method interactuar(heroe) {
-		heroe.equiparArmadura(self)
-	}
-
-}
-class ArmaduraDeBronce inherits Armadura{
-	
-	 override method image() {
-		return "armadurabronce.png"
-	}
-}
-class ArmaduraDePlata inherits Armadura{
-	
-	 override method image() {
-		return "armaduraplata.png"
-	}
-}
-class ArmaduraDeOro inherits Armadura{
-	
-	 override method image() {
-		return "armaduraoro.png"
-	}
-}
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////|
-class Pocion {
-
-	const esPocionMana
-	var property position
-	const property image
-
-	method teEncontraron(heroe) {
-	}
-
-	method interactuar(heroe) {
-		heroe.guardarObjetoEnLaMochila(self)
-	}
-	
-	method esPocionMana() { return esPocionMana }
-
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-class Cofre {
-
-	var property position
-	var property imagenAbierto
-	var property imagenCerrado
-	var property estaAbierto = false
-
-	method image() {
-		return if (estaAbierto) imagenAbierto else imagenCerrado
-	}
-
-	method teEncontraron(heroe) {
-		estaAbierto = true
-	}
-
-}
-
-/////////////////////////////////////////////////////////////////////////////////
 class Objeto {
 
 	var property position
 	var property image
 	
-	method teEncontraron(heroe) {
-	}
+	method teEncontraron(heroe) {}
+	
+	method interactuar(heroe) {}
 
 }
 
-object calavera {
+class Arma inherits Objeto {
 
-	var property position = game.at(8, 7)
+	var property danioArma
 
-	method image() {
+	override method interactuar(heroe) {
+		heroe.equiparArma(self)
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+class Armadura inherits Objeto {
+
+	const property defensaArmadura
+
+	override method interactuar(heroe) {
+		heroe.equiparArmadura(self)
+	}
+
+}
+/////////////////////////////////////////////////////////////////////////////////|
+class Pocion inherits Objeto {
+
+	const esPocionMana
+
+	override method interactuar(heroe) {
+		heroe.guardarObjetoEnLaMochila(self)
+	}
+	
+	method esPocionMana() { return esPocionMana }
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+class Cofre inherits Objeto {
+
+	var property imagenAbierto
+	var property imagenCerrado
+	var property estaAbierto = false
+
+	override method image() {
+		return if (estaAbierto) imagenAbierto else imagenCerrado
+	}
+
+	override method teEncontraron(heroe) {
+		estaAbierto = true
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+object calavera inherits Objeto {
+
+	override method image() {
 		return "Skull.png"
 	}
 
-	method teEncontraron(heroe) {
+	override method teEncontraron(heroe) {
 		pantallaCaminoAlBoss.heroe(heroe)
 		pantallaCaminoAlBoss.iniciar()
 	}
-
+	
+	override method position() {
+		return game.at(8, 7)
+	}
 }
 
-class Barra {
+class Barra inherits Objeto {
 	
  	const personaje
-	
-	const property position
-	
-	method image()
-	
+			
 	method imagenAMostrar(tipo, numero) {
 		return tipo + numero + ".png"
 	} 
@@ -151,12 +91,12 @@ class Barra {
 	
 	method numeroDeImagen(porcentaje) {
 		return if (porcentaje >= 88) "01" 
-		else if (porcentaje.between(77, 87)) "02" 
-		else if (porcentaje.between(65, 76)) "03" 
-		else if (porcentaje.between(53, 64)) "04" 
-		else if (porcentaje.between(41, 52)) "05" 
-		else if (porcentaje.between(29, 40)) "06" 
-		else if (porcentaje.between(1, 28)) "07" 
+		else if (porcentaje.between(77, 88)) "02" 
+		else if (porcentaje.between(65, 77)) "03" 
+		else if (porcentaje.between(52, 65)) "04" 
+		else if (porcentaje.between(40, 52)) "05" 
+		else if (porcentaje.between(28, 40)) "06" 
+		else if (porcentaje.between(0.1, 28)) "07" 
 		else if (porcentaje == 0) "08"
 	}
 }

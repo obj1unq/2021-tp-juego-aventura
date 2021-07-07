@@ -7,7 +7,7 @@ class Enemigo {
 	
 	var property image;
 	var property position;
-	var property nivelDeDanio = 20;
+	var property nivelDeDanio = 10;
 	var property actualVida = 100;
 	var property maxVida = 100
 	const secuenciaAtaque = new AnimacionAtaque()
@@ -24,23 +24,35 @@ class Enemigo {
 		heroe.recibirDanio(self)
 	}
 	
-	method secuenciaDeAtaques(heroe) {
-		game.onTick(1000, "ATAQUE_ENEMIGO", {self.atacar(heroe)})
+	method recibirDanioSiCorresponde(heroe) {
+		if (self.llegoVidaACero()) {
+			self.heroeGanaYSecambiaPantalla(heroe)
+		} else {
+			self.recibirDanioYContraatacar(heroe)
+		}
+	}
+	
+	method llegoVidaACero() {
+		return actualVida == 0
+	}
+	
+	method recibirDanioYContraatacar(heroe) {
+		self.recibirDanio(heroe)
+		game.schedule(300,{self.atacar(heroe)})
 	}
 	
 	method recibirDanio(heroe) {
-		if (actualVida == 0) {
-			heroe.ganar(self)
-			self.cambioPantalla(heroe)
-		} else {
-			self.ejecutarAnimacionAtaque()
-			actualVida = (actualVida - heroe.danioHeroe()).max(0)
-			game.schedule(300,{heroe.recibirDanio(self)})
-		}
+		self.ejecutarAnimacionAtaque()
+		actualVida = (actualVida - heroe.danioHeroe()).max(0)
 	}
-
+	
 	method ganar(heroe) {
 		self.terminar("perdiste.png")
+	}
+	
+	method heroeGanaYSecambiaPantalla(heroe) {
+		heroe.ganar(self)
+		self.cambioPantalla(heroe)
 	}
 	
 	method cambioPantalla(heroe) {
@@ -54,11 +66,19 @@ class Enemigo {
 			gestorDeObjetos.agregar(new Objeto(position = game.origin(), image = escenario))
 			game.schedule(3000, { => game.stop()})
 		})
-		
 	}
 	
 	method ejecutarAnimacionAtaque() {
 		secuenciaAtaque.ejecutar(position)
+	}
+	
+	method recibirDanioHechizo(heroe, danio) {
+		if (self.llegoVidaACero()) {
+			self.heroeGanaYSecambiaPantalla(heroe)
+		} else {
+			self.ejecutarAnimacionAtaque()
+			actualVida = (actualVida - danio).max(0)
+		}
 	}
 }
 
@@ -77,5 +97,9 @@ class Boss inherits Enemigo {
 	
 	override method ejecutarAnimacionAtaque() {
 		secuenciaAtaque.ejecutar(game.at(position.x(), position.y() + 1))
+	}
+	
+	override method nivelDeDanio() {
+		return 20;
 	}
 }

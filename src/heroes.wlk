@@ -1,4 +1,3 @@
-import hechizos.*
 import objetos.*
 import wollok.game.*
 import niveles.*
@@ -6,7 +5,6 @@ import gestorDeObjetos.*
 
 class Heroe {
 	var property mochila = #{}
-	var property libroDeHechizos = #{}
 	var property armaEquipada = null
 	var property armaduraEquipada = null
 	var property maxVida
@@ -73,26 +71,20 @@ class Heroe {
 	method tieneArmaduraEquipada() {
 		return self.armaduraEquipada() != null
 	}
-	
-	method aprenderHechizo(hechizo){
-		libroDeHechizos.add(hechizo) //Agregar hechizo al conjunto
-	}
 	//############################################################## FIN Mensajes con Equipo
 	
 	
 	//############################################################## Mensajes con Pociones
 	method beberPocionVida() {
-		if (self.hayPocionDeVida()) {
-			self.removerPocionDeLaMochila(self.buscarPocionVidaEnMochila())
-			self.incrementarVida()
-		}
+		self.validarSiHayPocionDeVida()
+		self.removerPocionDeLaMochila(self.buscarPocionVidaEnMochila())
+		self.incrementarVida()
 	}
 	
 	method beberPocionMana() {
-		if (self.hayPocionDeMana()) {
-			self.removerPocionDeLaMochila(self.buscarPocionManaEnMochila())
-			self.incrementarMana()
-		}
+		self.validarSiHayPocionDeMana()
+		self.removerPocionDeLaMochila(self.buscarPocionManaEnMochila())
+		self.incrementarMana()
 	}
 	
 	method buscarPocionVidaEnMochila() { return self.mochila().find({ pocion => not pocion.esPocionMana() }) }
@@ -107,23 +99,31 @@ class Heroe {
 		self.mochila().remove(pocion)
 	}
 	
+	method validarSiHayPocionDeVida() {
+		if (!self.hayPocionDeVida()) {
+			self.error("No tenés poción de vida.")
+		}
+	}
+	
+	method validarSiHayPocionDeMana() {
+		if (!self.hayPocionDeMana()) {
+			self.error("No tenés poción de mana.")
+		}
+	}
+	
+	method hayMana() {
+		return self.actualMana() !== 0
+	}
+	
 	//############################################################## FIN Mensajes con Pociones
 	
 	//############################################################## Mensajes modificadores y de estado
 	method incrementarVida() {
-		if (self.actualVida() + 50 > self.maxVida()) {
-			self.actualVida(self.maxVida())
-		} else {
-			self.actualVida(self.actualVida() + 50)
-		}
+		self.actualVida(self.maxVida())
 	}
 	
 	method incrementarMana() {
-		if (self.actualMana() + 30 > self.maxMana()) {
-			self.actualMana(self.maxMana())
-		} else {
-			self.actualMana(self.actualMana() + 30)
-		}
+		self.actualMana(self.maxMana())
 	}
 	
 	method heroeConVidaMaxima() {
@@ -145,14 +145,22 @@ class Heroe {
 	
 	method modificadorDeDefensa() {return 0}
 	
-	method danioHeroe() {return armaEquipada.danioArma() * self.modificadorDeAtaque()}
+	method danioHeroe() {return self.danioArmaSiTieneEquipada() * self.modificadorDeAtaque()}
 	
-	method defensaHeroe() {return armaduraEquipada.defensaArmadura() * self.modificadorDeDefensa()}
+	method defensaHeroe() {return self.danioArmaduraSiTieneEquipada() * self.modificadorDeDefensa()}
+	
+	method danioArmaSiTieneEquipada() {
+		return if (armaEquipada != null) armaEquipada.danioArma() else 8
+	}
+	
+	method danioArmaduraSiTieneEquipada() {
+		return if (armaduraEquipada != null) armaduraEquipada.defensaArmadura() else 8
+	}
 	//############################################################## FIN Mensajes modificadores de estado
 	
 	//############################################################## Mensajes de Combate
-	method atacarEnemigo(enemigo) {
-		enemigo.recibirDanio(self)
+	method atacar(enemigo) {
+		enemigo.recibirDanioSiCorresponde(self)
 	}
 	
 	method recibirDanio(enemigo) {
@@ -183,12 +191,22 @@ class Heroe {
 		secuenciaAtaque.ejecutar(position)
 	}
 	
+	method lanzarHechizo(enemigo) {
+		self.validarSiHayManaParaLanzarHechizo()
+		self.actualMana(0)
+		enemigo.recibirDanioHechizo(self, 50 * self.modificadorDeAtaque()) 
+	}
+	
+	method validarSiHayManaParaLanzarHechizo() {
+		if (!self.hayMana()) {
+			self.error("No tenés maná.")
+		} 
+	}
 	//############################################################## FIN Mensajes de Combate
 }
 
 object warrior inherits Heroe {
 	const property image = "warrior.png"
-	var property pantalla
 	
 	method init() {
 		self.maxVida(200)
@@ -202,7 +220,6 @@ object warrior inherits Heroe {
 
 object tank inherits Heroe {
 	const property image = "tank.png"
-	var property pantalla
 	
 	method init() {
 		self.maxVida(250)
@@ -216,7 +233,6 @@ object tank inherits Heroe {
 
 object wizzard inherits Heroe {
 	const property image = "wizzard.png"
-	var property pantalla
 	
 	method init() {
 		self.maxVida(125)
@@ -224,7 +240,8 @@ object wizzard inherits Heroe {
 		self.actualVida(125)
 		self.actualMana(250)
 	}
-	override method modificadorDeAtaque() {return 0.8}
+	
+	override method modificadorDeAtaque() {return 0.9}
 	override method modificadorDeDefensa() {return 0.8}
 }
 /////////////////////////////////////////////////////////////////////////////////

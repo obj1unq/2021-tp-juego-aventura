@@ -23,4 +23,15 @@ es decir no puede equipar al héroe con una hacha y espada al mismo tiempo.
  ### 3. Pelea Final
  
 En esta pantalla el heroe combate contra el Boss Final. El cual posee un nivel de difultad mayor que los enemigos simples
+
+ ### 4. Comandos
+ <img src="assets/direcciones.jpg" width="300px" />
  
+ Con las teclas de direcciones nuestro heroe, se puede desplazar por el mapa, para ir al encuentro de los diversos enemigos.
+  
+  <img src="assets/letterC.png" width="300px" />
+  
+  Presionando esta tecla, nuestro heroe puede levatar del mapa, las distintas armas, armadura como asi tambien las pociones.
+  Para poder hacerlo debe estar encima de ellos  
+ 
+  
