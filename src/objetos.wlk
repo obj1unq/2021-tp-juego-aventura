@@ -96,7 +96,7 @@ class Barra inherits Objeto {
 		else if (porcentaje.between(52, 65)) "04" 
 		else if (porcentaje.between(40, 52)) "05" 
 		else if (porcentaje.between(28, 40)) "06" 
-		else if (porcentaje.between(1, 28)) "07" 
+		else if (porcentaje.between(0.1, 28)) "07" 
 		else if (porcentaje == 0) "08"
 	}
 }
