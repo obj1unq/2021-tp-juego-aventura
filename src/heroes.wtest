@@ -48,6 +48,13 @@ describe "Tests para los heroes" {
 		assert.equals(50, warrior.actualMana())
 	}
 	
+	test "heroe no puede beber pociones porque no tiene" {
+		assert.equals(#{ }, warrior.mochila())
+		
+		assert.throwsException({warrior.beberPocionMana()})
+		assert.throwsException({warrior.beberPocionVida()})
+	}
+	
 	test "Heroe toma un arma y se lo equipa" {
 		gestorDeObjetos.agregar(armaHacha)
 		warrior.tomarObjetoQueTenesDebajo()
@@ -94,7 +101,7 @@ describe "Tests para los heroes" {
 		assert.equals(198.8, warrior.actualVida())
 	}
 	
-	test "Enemigo (warrior) recibe danio de heroe sin arma equipada" {
+	test "Enemigo recibe danio de heroe (warrior) sin arma equipada" {
 		warrior.atacar(arbolFuego)
 		
 		assert.that(arbolFuego.actualVida() < 100)
@@ -112,7 +119,7 @@ describe "Tests para los heroes" {
 		assert.equals(199, warrior.actualVida())
 	}
 	
-	test "Enemigo (warrior) recibe danio de heroe con arma equipada" {
+	test "Enemigo recibe danio de heroe (warrior) con arma equipada" {
 		warrior.armaEquipada(armaHacha)
 		
 		warrior.atacar(arbolFuego)
@@ -130,7 +137,7 @@ describe "Tests para los heroes" {
 		assert.equals(121.4, wizzard.actualVida())
 	}
 	
-	test "Enemigo (wizzard) recibe danio de heroe sin arma equipada" {
+	test "Enemigo recibe danio de heroe (wizzard) sin arma equipada" {
 		wizzard.atacar(arbolFuego)
 		
 		assert.that(arbolFuego.actualVida() < 100)
@@ -148,7 +155,7 @@ describe "Tests para los heroes" {
 		assert.equals(123, wizzard.actualVida())
 	}
 	
-	test "Enemigo (wizzard) recibe danio de heroe con arma equipada" {
+	test "Enemigo recibe danio de heroe (wizzard) con arma equipada" {
 		wizzard.armaEquipada(armaHacha)
 		
 		wizzard.atacar(arbolFuego)
@@ -166,7 +173,7 @@ describe "Tests para los heroes" {
 		assert.equals(249, tank.actualVida())
 	}
 	
-	test "Enemigo (tank) recibe danio de heroe sin arma equipada" {
+	test "Enemigo recibe danio de heroe (tank) sin arma equipada" {
 		tank.atacar(arbolFuego)
 		
 		assert.that(arbolFuego.actualVida() < 100)
@@ -184,7 +191,7 @@ describe "Tests para los heroes" {
 		assert.equals(249, tank.actualVida())
 	}
 	
-	test "Enemigo (tank) recibe danio de heroe con arma equipada" {
+	test "Enemigo recibe danio de heroe (tank) con arma equipada" {
 		tank.armaEquipada(armaHacha)
 		
 		tank.atacar(arbolFuego)
@@ -193,8 +200,6 @@ describe "Tests para los heroes" {
 		// (danio arma: 12 * modificador de ataque: 1.1) = 13.2 => 100 - 13.2 => 86.8
 		assert.equals(86.8, arbolFuego.actualVida())
 	}
-	
-	
 	
 	test "Heroe (warrior) lanza ataque especial" {
 		warrior.lanzarHechizo(arbolFuego)
